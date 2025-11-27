@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  /* MAIN */
+  --raba-orange: #ef5a22;
+
+  --neutral-black: #1a1a1a;
+  --neutral-dark: #00001a;
+  --neutral-100: #f4f4f5;
+  --neutral-200: #edecec;
+  --neutral-250: #eaecf0;
+  --neutral-300: #dbdbdd;
+  --neutral-350: #c7c7cc;
+  --neutral-400: #aeaeb2;
+  --neutral-450: #858587;
+  --neutral-500: #7e7e7e;
+  --neutral-600: #667085;
+  --neutral-700: #626262;
+  --neutral-750: #8f8f8f;
+  --neutral-800: #6b6f80;
+  --neutral-900: #101828;
+  --white-pure: #fcfcfd;
+  --white-soft: #ecfdf3;
+  --white-background: #fcffe7;
+  --red-light: #ffeded;
+  --red-primary: #f53d3d;
+  --red-secondary: #e00000;
+  --orange-primary: #ff7e0c;
+  --orange-secondary: #fcca00;
+  --orange-tertiary: #f88553;
+  --green-primary: #22c55e;
+  --green-secondary: #62c453;
+  --green-tertiary: #15c824;
+  --green-accent: #00cc51;
+  --green-light: #ecfdf3;
+  --green-dark: #037847;
+  --green-soft: #14ba6d;
+  --blue-primary: #0070ff;
+  --blue-secondary: #0088ff;
+  --blue-accent: #4845ff;
+  --yellow-primary: #fcca00;
+  --yellow-secondary: #f59e0b;
+  --yellow-gold: #c79442;
+  --yellow-light: #fff2db;
+  --purple-accent: #838799;
+  --dark-gray: #8e8e93;
+  --olive: #939755;
+  --terracotta: #e86a33;
+}
+
+@theme inline {
+  --color-raba-orange: var(--raba-orange);
+
+  --color-neutral-black: var(--neutral-black);
+  --color-neutral-dark: var(--neutral-dark);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-250: var(--neutral-250);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-350: var(--neutral-350);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-450: var(--neutral-450);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-750: var(--neutral-750);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-white-pure: var(--white-pure);
+  --color-white-soft: var(--white-soft);
+  --color-white-background: var(--white-background);
+  --color-red-light: var(--red-light);
+  --color-red-primary: var(--red-primary);
+  --color-red-secondary: var(--red-secondary);
+  --color-orange-primary: var(--orange-primary);
+  --color-orange-secondary: var(--orange-secondary);
+  --color-orange-tertiary: var(--orange-tertiary);
+  --color-green-primary: var(--green-primary);
+  --color-green-secondary: var(--green-secondary);
+  --color-green-tertiary: var(--green-tertiary);
+  --color-green-accent: var(--green-accent);
+  --color-green-light: var(--green-light);
+  --color-green-dark: var(--green-dark);
+  --color-green-soft: var(--green-soft);
+  --color-blue-primary: var(--blue-primary);
+  --color-blue-secondary: var(--blue-secondary);
+  --color-blue-accent: var(--blue-accent);
+  --color-yellow-primary: var(--yellow-primary);
+  --color-yellow-secondary: var(--yellow-secondary);
+  --color-yellow-gold: var(--yellow-gold);
+  --color-yellow-light: var(--yellow-light);
+  --color-purple-accent: var(-purple-accent-);
+  --color-dark-gray: var(--dark-gray);
+  --color-olive: var(--olive);
+  --color-terracotta: var(--terracotta);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+.smooth-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*====== CUSTOM SCROLL BAR =======*/
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+}
+::-webkit-scrollbar-thumb {
+  background: #e86a33;
+  border: 3px solid #fcffe7;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 4px solid #006837;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border-bottom: 4px solid #ff3d00;
+  border-left: 4px solid transparent;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
