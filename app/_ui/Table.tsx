@@ -32,7 +32,7 @@ export default function Table({
   tableClassName = "min-w-full border-collapse",
   headerClassName = "bg-white-pure",
   rowClassName = "text-neutral-600 text-xs border-b border-b-neutral-250 hover:bg-white-pure",
-  cellClassName = "px-4 py-2 text-sm font-semibold -tracking-[0.25px] text-neutral-600 text-left",
+  cellClassName = "p-4 text-sm -tracking-[0.25px] text-neutral-600 text-left",
   showRowActions = true,
 }: TableProps) {
   return (

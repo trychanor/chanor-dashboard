@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import Tabs from "../_ui/Tabs";
+import Transaction from "../_features/transaction/_components/Transaction";
+import { useTransactionViewStore } from "../_store/useTransactionViewStore";
+
 export default function Page() {
+  const { showAllTransactions } = useTransactionViewStore();
   const [activeTab, setActiveTab] = useState("Transaction");
   const tabs = [
-    { key: "Transaction", label: "Transaction", content: "Transaction" },
+    { key: "Transaction", label: "Transaction", content: <Transaction /> },
     {
       key: "Wallet & Balance",
       label: "Wallet & Balance",
@@ -22,9 +26,13 @@ export default function Page() {
   return (
     <div>
       <h2 className="text-[32px] text-neutral-black -leading-[0.33px] font-bold">
-        {activeTab === "Transaction" && "Overview"}
-        {activeTab === "Wallet & Balance" && "Wallet & Balance"}
+        {activeTab === "Transaction" && !showAllTransactions ? "Overview" : ""}
+        {activeTab === "Wallet & Balance" && !showAllTransactions
+          ? "Wallet & Balance"
+          : ""}
+        {showAllTransactions && "Transaction"}
       </h2>
+
       <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
     </div>
   );
