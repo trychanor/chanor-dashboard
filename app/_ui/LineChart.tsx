@@ -17,7 +17,6 @@ type ChartsProps = {
   additionalStyles?: string;
 };
 
-
 export default function LineCharts({ data, additionalStyles }: ChartsProps) {
   return (
     <LineChart

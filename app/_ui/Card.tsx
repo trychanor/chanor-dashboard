@@ -10,7 +10,7 @@ type CardProps = {
 };
 
 export default function Card({
-  width = "256px",
+  width,
   height = "140px",
   header,
   main,
