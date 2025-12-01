@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Tabs from "../_ui/Tabs";
 import Transaction from "../_features/transaction/_components/Transaction";
+import WalletAndBalance from "../_features/wallet/_components/WalletAndBalance";
 import { useTransactionViewStore } from "../_store/useTransactionViewStore";
 
 export default function Page() {
@@ -13,7 +14,7 @@ export default function Page() {
     {
       key: "Wallet & Balance",
       label: "Wallet & Balance",
-      content: "Wallet & Balance",
+      content: <WalletAndBalance />,
     },
     { key: "User View", label: "User View", content: "User View" },
     {
