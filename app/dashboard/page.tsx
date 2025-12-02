@@ -5,6 +5,7 @@ import Tabs from "../_ui/Tabs";
 import Transaction from "../_features/transaction/_components/Transaction";
 import WalletAndBalance from "../_features/wallet/_components/WalletAndBalance";
 import { useTransactionViewStore } from "../_store/useTransactionViewStore";
+import UserView from "../_features/user-view/components/UserView";
 
 export default function Page() {
   const { showAllTransactions } = useTransactionViewStore();
@@ -16,7 +17,7 @@ export default function Page() {
       label: "Wallet & Balance",
       content: <WalletAndBalance />,
     },
-    { key: "User View", label: "User View", content: "User View" },
+    { key: "User View", label: "User View", content: <UserView /> },
     {
       key: "Security Overview",
       label: "Security Overview",
