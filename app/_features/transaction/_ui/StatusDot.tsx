@@ -9,6 +9,7 @@ const STATUS_COLORS: Record<string, string> = {
   completed: "var(--green-soft)",
   failed: "var(--red-primary)",
   pending: "var(--yellow-gold)",
+  declined: "var(--yellow-gold)",
 };
 
 export default function StatusDot({ label, size = 10 }: StatusDotProps) {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Tabs from "../_ui/Tabs";
 import Transaction from "../_features/transaction/_components/Transaction";
 import { useTransactionViewStore } from "../_store/useTransactionViewStore";
+import UserView from "../_features/user-view/components/UserView";
 
 export default function Page() {
   const { showAllTransactions } = useTransactionViewStore();
@@ -15,7 +16,7 @@ export default function Page() {
       label: "Wallet & Balance",
       content: "Wallet & Balance",
     },
-    { key: "User View", label: "User View", content: "User View" },
+    { key: "User View", label: "User View", content: <UserView /> },
     {
       key: "Security Overview",
       label: "Security Overview",
