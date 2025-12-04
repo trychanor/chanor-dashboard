@@ -31,7 +31,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="fixed top-0 left-0 h-screen w-[280px] bg-[#E86A33] flex flex-col">
+    <aside className="fixed top-0 left-0 h-screen w-[280px] bg-[#E86A33] flex flex-col overflow-y-auto">
       <div className="py-4 px-6">
         <Image
           src="/logo.png"

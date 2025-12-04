@@ -1,43 +1,49 @@
 "use client";
 import ArrowUpIcon from "@/app/_ui/support/arrowUpIcon";
 import ZigZagIcon from "@/app/_ui/support/zigzagIcon";
+import ZigIcon from "../../../../_ui/support/zigIcon";
 import SupportChart from "@/app/_ui/support/supportChart";
-import RecentActivity from "@/app/_ui/support/recentActivity";
+import FlowTable from "@/app/_ui/support/flowTable";
 
-export default function Support() {
+interface FlowProps {
+  params: { id: string };
+}
+
+export default function Flow({ params }: FlowProps) {
+//   const { id } = params;
   const items = [
     {
-      title: "Open Ticket",
-      value: 58,
+      title: "Total Float",
+      value: "₦58,000",
+      trend: "+8.5%",
+      colorClass: "#22C55E",
+      iconColor: "#22C55E",
+    },
+    {
+      title: "Inflow",
+      value: "₦558,000",
+      trend: "+8.5%",
+      colorClass: "#22C55E",
+      iconColor: "#22C55E",
+    },
+    {
+      title: "Outflow",
+      value: "₦68,000",
+      trend: "+8.5%",
+      colorClass: "#22C55E",
+      iconColor: "#22C55E",
+    },
+    {
+      title: "Pending",
+      value: "₦34,000",
       trend: "+8.5%",
       colorClass: "#F53D3D",
       iconColor: "#F53D3D",
     },
-    {
-      title: "Resolved Ticket",
-      value: 58,
-      trend: "+8.5%",
-      colorClass: "#22C55E",
-      iconColor: "#22C55E",
-    },
-    {
-      title: "Pending Ticket",
-      value: 0,
-      trend: "+8.5%",
-      colorClass: "#22C55E",
-      iconColor: "#22C55E",
-    },
-    {
-      title: "Escalate Issue",
-      value: 10,
-      trend: "+8.5%",
-      colorClass: "#22C55E",
-      iconColor: "#22C55E",
-    },
   ];
-  
+
   return (
-    <div>
+    <div className="">
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-[18px]">
         {items.map((item, index) => (
           <div
@@ -46,15 +52,19 @@ export default function Support() {
           >
             {/* Title + Icon */}
             <div className="flex items-center justify-between">
-              <h3 className="text-[13px] font-[500] leading-[100%] text-[var(--neutral-black)]">
+              <h3 className="text-[13px] font-[500] leading-[100%] text-var(--neutral-black)">
                 {item.title}
               </h3>
 
-              <ZigZagIcon fill={item.iconColor} />
+              {index === items.length - 1 ? (
+                <ZigIcon fill={item.iconColor} />
+              ) : (
+                <ZigZagIcon fill={item.iconColor} />
+              )}
             </div>
 
             {/* Value */}
-            <div className="text-[32px] font-[600] leading-[100%] text-var(--neutral-black)">
+            <div className="text-[24px] font-[600] leading-[100%] text-var(--neutral-black)">
               {item.value}
             </div>
 
@@ -75,10 +85,17 @@ export default function Support() {
           </div>
         ))}
       </div>
-      <div className="mt-10">
-        <SupportChart/>
+      <div className="bg-white rounded-[8px] mt-10  pb-4">
+        <h2 className="text-[20px] p-6 font-[500] leading-[100%] text-[#1A1A1A]">
+          Daily Inflow and Outflow
+        </h2>
+        <div className="mt-10">
+          <SupportChart />
+        </div>
       </div>
-      <RecentActivity/>
+      <div>
+        <FlowTable />
+      </div>
     </div>
   );
 }
