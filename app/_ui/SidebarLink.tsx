@@ -11,14 +11,8 @@ export type SidebarLinkProps = {
 
 export default function SidebarLink({ icon, label, to }: SidebarLinkProps) {
   const pathname = usePathname();
-
-  let isActive = false;
-
-  if (to === "/dashboard") {
-    isActive = pathname === "/dashboard";
-  } else {
-    isActive = pathname === to || pathname.startsWith(`${to}/`);
-  }
+  const isActive =
+    to === "/dashboard" ? pathname === "/dashboard" : pathname === to;
 
   return (
     <li>

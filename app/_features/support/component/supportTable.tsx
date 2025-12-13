@@ -1,33 +1,15 @@
 import Table from "@/app/_ui/Table";
 import { CgCalendarDates } from "react-icons/cg";
 import { MdOutlineRefresh } from "react-icons/md";
+import Status from "../../../_ui/Status";
 
-export default function FlowTable() {
+export default function SupportTable() {
   const columns = [
     { key: "date", label: "Date" },
     { key: "totalInflow", label: "Total Inflow" },
     { key: "totalOutflow", label: "Total Outflow" },
     { key: "net", label: "Net" },
-    {
-      key: "status",
-      label: "Status",
-      render: (row: any) => {
-        const status = row.status;
-        const isSettled = status === "Settled";
-
-        return (
-          <span
-            className={`px-3 py-1 text-xs rounded-full font-medium ${
-              isSettled
-                ? "bg-[#ecfdf3] text-[#037847]"
-                : "bg-[#FFF2DB] text-[#F59E0B]"
-            }`}
-          >
-            ● {status}
-          </span>
-        );
-      },
-    },
+    { key: "status", label: "Status" },
   ];
 
   const rows = [
@@ -38,7 +20,7 @@ export default function FlowTable() {
         totalInflow: "₦8,200,00",
         totalOutflow: "₦500,000",
         net: "₦9,00,00",
-        status: "Settled",
+        status: <Status label="Settled" appearance="subtle" showDot={true} />,
       },
     },
     {
@@ -48,7 +30,7 @@ export default function FlowTable() {
         totalInflow: "₦2,000,00",
         totalOutflow: "₦830,000",
         net: "200,000",
-        status: "Pending",
+        status: <Status label="Pending" appearance="subtle" showDot={true} />,
       },
     },
     {
@@ -58,7 +40,7 @@ export default function FlowTable() {
         totalInflow: "₦900,00",
         totalOutflow: "₦400,000",
         net: "300,00",
-        status: "Settled",
+        status: <Status label="Settled" appearance="subtle" showDot={true} />,
       },
     },
   ];
@@ -82,11 +64,7 @@ export default function FlowTable() {
 
       {/* table */}
       <div className="w-full">
-        <Table
-          columns={columns}
-          rows={rows}
-          showRowActions={false}
-        />
+        <Table columns={columns} rows={rows} showRowActions={false} />
       </div>
     </div>
   );

@@ -22,9 +22,7 @@ export default function RecentActivity() {
     },
   ];
 
-  const handleClick = (item: any) => {
-    router.push(`/dashboard/support/flow/${item.id}`);
-  };
+  
 
   return (
     <div className="md:px-6 px-4 bg-white rounded-[8px]">
@@ -37,7 +35,7 @@ export default function RecentActivity() {
         {Array.from({ length: 6 }).map((_, timelineIndex) => (
           <div key={timelineIndex} className="relative flex flex-col gap-2">
             {/* Vertical line BETWEEN dot*/}
-            <div className="absolute left-[88px] top-[-10px] h-[110px] bottom-0 w-[3px] bg-[#e3e3e5] z-0"></div>
+            <div className="absolute left-[88px] xl:left-[96px] top-[-10px] h-[110px] bottom-0 w-[3px] bg-[#e3e3e5] z-0"></div>
 
             {activities.map((item, index) => (
               <div key={index} className="flex items-start gap-3 relative z-10">
@@ -64,14 +62,12 @@ export default function RecentActivity() {
 
                 {/* MESSAGE CARD */}
                 <div
-                  onClick={() => handleClick(item)}
                   className="bg-white border-[1px] rounded-[5px] border-[#e3e3e5] px-4 py-2 w-[330px] ml-2 cursor-pointer hover:bg-gray-50 transition"
                 >
                   <p className="text-[13px] font-[500] leading-[18px] text-[var(--neutral-black)]">
                     {item.message}
                   </p>
                 </div>
-
               </div>
             ))}
           </div>
