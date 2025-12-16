@@ -4,6 +4,8 @@ import "./globals.css";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["300", "400", "500", "600", "700"],
@@ -22,23 +24,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
-        <main>{children}</main>
-        <ToastContainer
-          position="top-left"
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
-        />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${poppins.className} antialiased`}>
+          <main>{children}</main>
+          <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
