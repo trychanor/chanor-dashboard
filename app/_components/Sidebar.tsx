@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Home,
   AlertTriangle,
@@ -10,6 +12,7 @@ import {
 } from "lucide-react";
 import SidebarLink from "../_ui/SidebarLink";
 import Image from "next/image";
+import { SignOutButton } from "@clerk/nextjs";
 
 export default function Sidebar() {
   const PrimaryNavLinks = [
@@ -27,7 +30,7 @@ export default function Sidebar() {
 
   const SecondaryNavLinks = [
     { label: "Settings", to: "/dashboard/settings", icon: <Settings /> },
-    { label: "Sign Out", to: "/dashboard/setting", icon: <LogOut /> },
+    // { label: "Sign Out", to: "/dashboard/setting", icon: <LogOut /> },
   ];
 
   return (
@@ -52,9 +55,22 @@ export default function Sidebar() {
         <hr className="border-t border-white my-6" />
 
         <div className="flex-1 flex flex-col justify-between mb-3">
-          {SecondaryNavLinks.map(({ label, to, icon }) => (
-            <SidebarLink key={to} to={to} label={label} icon={icon} />
-          ))}
+          <ul className="space-y-2">
+            {SecondaryNavLinks.map(({ label, to, icon }) => (
+              <SidebarLink key={to} to={to} label={label} icon={icon} />
+            ))}
+
+            {/* CLERK SIGN OUT BUTTON */}
+            <li className="px-6">
+              <SignOutButton>
+                <button className="flex items-center gap-3 w-full text-white hover:text-white/80 transition-colors py-3">
+                  <LogOut size={20} />
+                  <span className="font-medium">Sign Out</span>
+                </button>
+              </SignOutButton>
+            </li>
+
+          </ul>
         </div>
       </nav>
     </aside>

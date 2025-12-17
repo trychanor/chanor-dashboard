@@ -4,7 +4,14 @@ import "./globals.css";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { ClerkProvider } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const poppins = Poppins({
   variable: "--font-poppins",
