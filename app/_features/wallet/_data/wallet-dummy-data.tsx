@@ -2,7 +2,6 @@ import React from "react";
 import Status from "@/app/_ui/Status";
 
 // Helper to render Status component inside data
-// We use this to keep the data file clean while returning the UI component required by the Table
 const renderStatus = (label: string, appearance: "subtle" | "solid" | "subtle-rounded" = "subtle", showDot = true) => (
   <Status label={label} appearance={appearance} showDot={showDot} />
 );

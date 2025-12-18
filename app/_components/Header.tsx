@@ -1,7 +1,14 @@
+"use client";
+
 import { Sun, Moon, Bell, Search } from "lucide-react";
 import Image from "next/image";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Header() {
+
+  const { user } = useUser();
+
+  
   return (
     <header className=" h-20 px-8 flex items-center justify-end gap-[26px]">
       <div className="relative max-w-[450px] flex-1 mr-6">
@@ -29,19 +36,16 @@ export default function Header() {
         </button>
 
         <div className="flex items-center gap-3">
-          <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
-            width={44}
-            height={44}
-            alt="User"
-            className="w-11 h-11 rounded-full object-cover"
-          />
+          <UserButton />
+
           <div className="text-left">
             <h3 className="text-base font-semibold tracking-[-0.33px] text-black">
-              John Smith
+              {/* User's Full Name */}
+              {user?.fullName || "User"}
             </h3>
             <p className="text-sm tracking-[-0.33px] text-dark-gray">
-              johnsmith@gmail.com
+              {/* Email */}
+              {user?.primaryEmailAddress?.emailAddress}
             </p>
           </div>
         </div>
