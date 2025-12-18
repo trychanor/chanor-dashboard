@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
-import { MoreHorizontal } from "lucide-react";
+"use client";
+import { ReactNode, useState, useRef, useEffect } from "react";
+import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 interface TableColumn {
   key: string;
@@ -8,15 +9,21 @@ interface TableColumn {
   className?: string;
 }
 
+interface MenuItem {
+  icon?: ReactNode;
+  label: string;
+  onClick?: (rowData: any) => void;
+}
+
 interface TableRow {
   id: string | number;
   data: Record<string, any>;
-  actions?: ReactNode;
 }
 
 interface TableProps {
   columns: TableColumn[];
   rows: TableRow[];
+  menus?: MenuItem[];
   className?: string;
   tableClassName?: string;
   headerClassName?: string;
@@ -28,6 +35,7 @@ interface TableProps {
 export default function Table({
   columns,
   rows,
+  menus,
   className = "",
   tableClassName = "min-w-full border-collapse",
   headerClassName = "bg-white-pure",
@@ -35,6 +43,20 @@ export default function Table({
   cellClassName = "p-4 text-sm -tracking-[0.25px] text-neutral-600 text-left",
   showRowActions = true,
 }: TableProps) {
+  const [openRowId, setOpenRowId] = useState<number | string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close menu on outside click
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+  //       setOpenRowId(null);
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
+
   return (
     <div className={`overflow-x-auto ${className}`}>
       <table className={tableClassName}>
@@ -63,12 +85,42 @@ export default function Table({
                 </td>
               ))}
               {showRowActions && (
-                <td className={cellClassName}>
-                  {row.actions || (
-                    <button className="p-1 hover:bg-neutral-100 rounded-full">
+                <td className={cellClassName} ref={menuRef}>
+                  <div className="relative">
+                    <button
+                      className="p-1 hover:bg-neutral-100 rounded-full cursor-pointer"
+                      onClick={() =>
+                        setOpenRowId(openRowId === row.id ? null : row.id)
+                      }
+                    >
                       <MoreHorizontal size={16} />
                     </button>
-                  )}
+
+                    {menus && openRowId === row.id && (
+                      <div className="absolute right-20 mt-2 w-40 bg-white rounded shadow-lg z-10">
+                        {menus.map((menu) => (
+                          <button
+                            key={menu.label}
+                            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm hover:bg-neutral-100 cursor-pointer"
+                            onClick={() => {
+                              if (menu.onClick) menu.onClick(row.data);
+                              setOpenRowId(null);
+                            }}
+                          >
+                            {menu?.icon}
+                            {menu.label.toLowerCase() === "see details" &&
+                              !menu.icon && <Eye className="w-4 h-4" />}
+                            {menu.label.toLowerCase() === "edit" &&
+                              !menu.icon && <Pencil className="w-4 h-4" />}
+                            {menu.label.toLowerCase() === "delete" &&
+                              !menu.icon && <Trash2 className="w-4 h-4" />}
+
+                            {menu.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </td>
               )}
             </tr>
