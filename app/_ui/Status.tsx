@@ -11,7 +11,7 @@ interface BadgeProps {
 }
 
 const STATUS_COLOR_MAP = {
-  green: ["completed", "successful", "active"],
+  green: ["completed", "successful", "active", "settled"],
   blue: ["transactions"],
   yellow: ["pending", "declined"],
   gray: ["inactive"],
