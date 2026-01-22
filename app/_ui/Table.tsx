@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useState, useRef, useEffect } from "react";
+import { ReactNode, useState, useRef } from "react";
 import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 interface TableColumn {
@@ -85,8 +85,8 @@ export default function Table({
                 </td>
               ))}
               {showRowActions && (
-                <td className={cellClassName} ref={menuRef}>
-                  <div className="relative">
+                <td className={cellClassName}>
+                  <div className="relative" ref={menuRef}>
                     <button
                       className="p-1 hover:bg-neutral-100 rounded-full cursor-pointer"
                       onClick={() =>
