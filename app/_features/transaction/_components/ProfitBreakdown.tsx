@@ -1,7 +1,15 @@
 import Table from "@/app/_ui/Table";
 
+type ProfitBreakdownRow = {
+  month: string;
+  transfer: string;
+  airtime: string;
+  bill: string;
+  total: string;
+};
+
 export default function ProfitBreakdown() {
-  const columns = [
+  const columns: Array<{ key: keyof ProfitBreakdownRow; label: string }> = [
     { key: "month", label: "Month" },
     { key: "transfer", label: "Transfer" },
     { key: "airtime", label: "Airtime" },

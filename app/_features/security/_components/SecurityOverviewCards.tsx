@@ -1,5 +1,5 @@
 import Card from "@/app/_ui/Card";
-import { ArrowUp, ShieldAlert, Lock, UserX, Activity } from "lucide-react";
+import { ArrowUp, Activity } from "lucide-react";
 
 export default function SecurityOverviewCards() {
   return (

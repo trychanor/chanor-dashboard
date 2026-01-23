@@ -3,8 +3,16 @@ import { CalendarDays } from "lucide-react";
 import { RotateCw } from "lucide-react";
 import Status from "../../../_ui/Status";
 
+type SupportTableRow = {
+  date: string;
+  totalInflow: string;
+  totalOutflow: string;
+  net: string;
+  status: React.ReactNode;
+};
+
 export default function SupportTable() {
-  const columns = [
+  const columns: Array<{ key: keyof SupportTableRow; label: string }> = [
     { key: "date", label: "Date" },
     { key: "totalInflow", label: "Total Inflow" },
     { key: "totalOutflow", label: "Total Outflow" },
@@ -46,19 +54,19 @@ export default function SupportTable() {
   ];
 
   return (
-    <div className="bg-white rounded-[8px] mt-14">
+    <div className="bg-white rounded-lg mt-14">
       {/* calendar and date */}
-      <div className="flex justify-end items-center gap-[36px] p-6">
-        <div className="flex justify-center h-[44px] px-2 rounded-[8px] items-center gap-[21px] border-[1px] border-[#C7C7CC] text-[#667085]">
+      <div className="flex justify-end items-center gap-9 p-6">
+        <div className="flex justify-center h-11 px-2 rounded-lg items-center gap-[21px] border border-[#C7C7CC] text-[#667085]">
           <CalendarDays size={20} />
-          <h2 className="text-[12px] md:text-[14px] font-[500] leading-[100%]">
+          <h2 className="text-[12px] md:text-[14px] font-medium leading-[100%]">
             May 6, 2025 - 11:32 AM
           </h2>
         </div>
         {/* refresh */}
-        <div className="flex gap-[10px] text-[#0070FF] items-center">
+        <div className="flex gap-2.5 text-[#0070FF] items-center">
           <RotateCw size={20} />
-          <h3 className="text-[14px] font-[500] leading-[100%]">Refresh </h3>
+          <h3 className="text-[14px] font-medium leading-[100%]">Refresh </h3>
         </div>
       </div>
 

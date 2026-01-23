@@ -7,6 +7,22 @@ import LoaderMini from "@/app/_ui/LoaderMini";
 import { RotateCw } from "lucide-react";
 import { floatGaugeUsersData, floatGaugeAlertsData } from "../_data/wallet-dummy-data";
 
+type FloatGaugeUserRow = {
+  id: string;
+  businessName: string;
+  email: string;
+  balance: string;
+  category: string;
+};
+
+type FloatGaugeAlertRow = {
+  alertId: string;
+  type: string;
+  description: string;
+  amount: string;
+  status: React.ReactNode;
+};
+
 export default function FloatGauge() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -19,7 +35,7 @@ export default function FloatGauge() {
   };
 
   // --- Table 1 Columns ---
-  const userColumns = [
+  const userColumns: Array<{ key: keyof FloatGaugeUserRow; label: string }> = [
     { key: "id", label: "ID" },
     { key: "businessName", label: "Business Name" },
     { key: "email", label: "Email" },
@@ -28,7 +44,7 @@ export default function FloatGauge() {
   ];
 
   // --- Table 2 Columns ---
-  const alertColumns = [
+  const alertColumns: Array<{ key: keyof FloatGaugeAlertRow; label: string; className?: string }> = [
     { key: "alertId", label: "Alert ID" },
     { key: "type", label: "Type" },
     { key: "description", label: "Description", className: "max-w-[250px]" },
