@@ -4,8 +4,17 @@ import { useState } from "react";
 import Table from "@/app/_ui/Table";
 import Button from "@/app/_ui/Button";
 import LoaderMini from "@/app/_ui/LoaderMini";
-import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import { fraudAlertData } from "../_data/security-dummy-data";
+
+type FraudAlertRow = {
+  alertId: string;
+  type: string;
+  user: string;
+  description: string;
+  risk: React.ReactNode;
+  status: React.ReactNode;
+};
 
 export default function FraudAlert() {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -15,7 +24,7 @@ export default function FraudAlert() {
     setTimeout(() => setIsRefreshing(false), 1500);
   };
 
-  const columns = [
+  const columns: Array<{ key: keyof FraudAlertRow; label: string; className?: string }> = [
     { key: "alertId", label: "Alert ID" },
     { key: "type", label: "Type" },
     { key: "user", label: "User" },

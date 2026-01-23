@@ -13,9 +13,24 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+type TransactionOverviewRow = {
+  tfId: string;
+  transfer: string;
+  amount: string;
+  date: string;
+  status: React.ReactNode;
+};
+
+type VoiceActivityRow = {
+  command: string;
+  date: string;
+  transfer: React.ReactNode;
+  status: React.ReactNode;
+};
+
 export default function UserViewDetails() {
   // TRANSACTION OVERVIEW
-  const columns = [
+  const columns: Array<{ key: keyof TransactionOverviewRow; label: string }> = [
     { key: "tfId", label: "TF ID" },
     { key: "transfer", label: "Transfer" },
     { key: "amount", label: "Amount" },
@@ -58,7 +73,7 @@ export default function UserViewDetails() {
   ];
 
   // VOICE ACTIVITY
-  const columns1 = [
+  const columns1: Array<{ key: keyof VoiceActivityRow; label: string }> = [
     { key: "command", label: "Command" },
     { key: "date", label: "Date" },
     { key: "transfer", label: "Transfer" },

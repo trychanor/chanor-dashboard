@@ -7,6 +7,15 @@ import LoaderMini from "@/app/_ui/LoaderMini";
 import { RotateCw } from "lucide-react";
 import { usersWalletData } from "../_data/wallet-dummy-data";
 
+type UsersWalletRow = {
+  userId: string;
+  name: string;
+  email: string;
+  balance: string;
+  lastActive: string;
+  status: React.ReactNode;
+};
+
 export default function UsersWallet() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -15,7 +24,7 @@ export default function UsersWallet() {
     setTimeout(() => setIsRefreshing(false), 1500);
   };
 
-  const columns = [
+  const columns: Array<{ key: keyof UsersWalletRow; label: string }> = [
     { key: "userId", label: "User ID" },
     { key: "name", label: "Name" },
     { key: "email", label: "Email" },

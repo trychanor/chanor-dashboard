@@ -4,8 +4,17 @@ import { useState } from "react";
 import Table from "@/app/_ui/Table";
 import Button from "@/app/_ui/Button";
 import LoaderMini from "@/app/_ui/LoaderMini";
-import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import { lockedAccountData } from "../_data/security-dummy-data";
+
+type LockedAccountRow = {
+  userId: string;
+  email: string;
+  device: string;
+  ipAddress: string;
+  reason: string;
+  lockTime: string;
+};
 
 export default function LockedAccount() {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -15,7 +24,7 @@ export default function LockedAccount() {
     setTimeout(() => setIsRefreshing(false), 1500);
   };
 
-  const columns = [
+  const columns: Array<{ key: keyof LockedAccountRow; label: string }> = [
     { key: "userId", label: "User ID" },
     { key: "email", label: "Email" },
     { key: "device", label: "Device" },

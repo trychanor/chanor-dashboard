@@ -3,9 +3,18 @@ import Status from "@/app/_ui/Status";
 import Table from "@/app/_ui/Table";
 import { useRouter } from "next/navigation";
 
+type UserTableRow = {
+  userId: string;
+  name: string;
+  email: string;
+  joinedDate: string;
+  lastActive: string;
+  accountStatus: React.ReactNode;
+};
+
 export default function UserTable() {
   const router = useRouter();
-  const columns = [
+  const columns: Array<{ key: keyof UserTableRow; label: string }> = [
     { key: "userId", label: "User ID" },
     { key: "name", label: "Name" },
     { key: "email", label: "Email" },
@@ -167,7 +176,7 @@ export default function UserTable() {
             onClick: (row) => console.log("Edit", row),
             label: "Edit",
           },
-          { label: "Delete", },
+          { label: "Delete" },
         ]}
       />
     </div>

@@ -6,6 +6,15 @@ import Status from "@/app/_ui/Status";
 import Table from "@/app/_ui/Table";
 import { ArrowLeft, ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 
+type TransactionRow = {
+  ticketId: string;
+  sender: string;
+  receiver: string;
+  amount: string;
+  date: string;
+  status: React.ReactNode;
+};
+
 export default function AllTransactions() {
   const { setShowAllTransactions } = useTransactionViewStore();
   //       const [query, setQuery] = useState("");
@@ -13,7 +22,7 @@ export default function AllTransactions() {
   //     console.log("Searching for:", value);
   //     // API call, filter table, etc.
   //   };
-  const columns = [
+  const columns: Array<{ key: keyof TransactionRow; label: string }> = [
     { key: "ticketId", label: "Ticket ID" },
     { key: "sender", label: "Sender" },
     { key: "receiver", label: "Receiver" },

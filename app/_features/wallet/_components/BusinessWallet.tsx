@@ -7,6 +7,15 @@ import LoaderMini from "@/app/_ui/LoaderMini";
 import { RotateCw } from "lucide-react";
 import { businessWalletData } from "../_data/wallet-dummy-data";
 
+type BusinessWalletRow = {
+  businessId: string;
+  businessName: string;
+  email: string;
+  balance: string;
+  category: string;
+  status: React.ReactNode;
+};
+
 export default function BusinessWallet() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -15,7 +24,7 @@ export default function BusinessWallet() {
     setTimeout(() => setIsRefreshing(false), 1500);
   };
 
-  const columns = [
+  const columns: Array<{ key: keyof BusinessWalletRow; label: string }> = [
     { key: "businessId", label: "Business ID" },
     { key: "businessName", label: "Business Name" },
     { key: "email", label: "Email" },
