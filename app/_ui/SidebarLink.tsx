@@ -23,7 +23,7 @@ export default function SidebarLink({ icon, label, to }: SidebarLinkProps) {
         }`}
       >
         {icon}
-        <span className="text-2xl font-medium tracking-[-0.33px]">{label}</span>
+        <span className="text-xl font-medium tracking-[-0.33px]">{label}</span>
       </Link>
     </li>
   );
