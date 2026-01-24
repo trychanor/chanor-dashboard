@@ -5,9 +5,7 @@ import Image from "next/image";
 import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Header() {
-
   const { user } = useUser();
-
   
   return (
     <header className=" h-20 px-8 flex items-center justify-end gap-[26px]">
