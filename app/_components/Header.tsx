@@ -1,7 +1,6 @@
 "use client";
 
 import { Sun, Moon, Bell, Search } from "lucide-react";
-import Image from "next/image";
 import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Header() {
