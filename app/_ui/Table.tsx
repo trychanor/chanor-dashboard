@@ -1,29 +1,29 @@
 "use client";
-import { ReactNode, useState, useRef, useEffect } from "react";
+import { ReactNode, useState, useRef } from "react";
 import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
-interface TableColumn {
-  key: string;
+interface TableColumn<TData> {
+  key: keyof TData;
   label: string | ReactNode;
-  render?: (rowData: any) => ReactNode;
+  render?: (rowData: TData) => ReactNode;
   className?: string;
 }
 
-interface MenuItem {
+interface MenuItem<TData> {
   icon?: ReactNode;
   label: string;
-  onClick?: (rowData: any) => void;
+  onClick?: (rowData: TData) => void;
 }
 
-interface TableRow {
+interface TableRow<TData> {
   id: string | number;
-  data: Record<string, any>;
+  data: TData;
 }
 
-interface TableProps {
-  columns: TableColumn[];
-  rows: TableRow[];
-  menus?: MenuItem[];
+interface TableProps<TData> {
+  columns: TableColumn<TData>[];
+  rows: TableRow<TData>[];
+  menus?: MenuItem<TData>[];
   className?: string;
   tableClassName?: string;
   headerClassName?: string;
@@ -32,7 +32,7 @@ interface TableProps {
   showRowActions?: boolean;
 }
 
-export default function Table({
+export default function Table<TData extends Record<string, unknown>>({
   columns,
   rows,
   menus,
@@ -42,7 +42,7 @@ export default function Table({
   rowClassName = "text-neutral-600 text-xs border-b border-b-neutral-250 hover:bg-white-pure",
   cellClassName = "p-4 text-sm -tracking-[0.25px] text-neutral-600 text-left",
   showRowActions = true,
-}: TableProps) {
+}: TableProps<TData>) {
   const [openRowId, setOpenRowId] = useState<number | string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -64,7 +64,7 @@ export default function Table({
           <tr>
             {columns.map((col) => (
               <th
-                key={col.key}
+                key={String(col.key)}
                 className={`${cellClassName} ${col.className || ""}`}
               >
                 {col.label}
@@ -78,15 +78,15 @@ export default function Table({
             <tr key={row.id} className={rowClassName}>
               {columns.map((col) => (
                 <td
-                  key={col.key}
+                  key={String(col.key)}
                   className={`${cellClassName} ${col.className || ""}`}
                 >
-                  {col.render ? col.render(row.data) : row.data[col.key]}
+                  {col.render ? col.render(row.data) : (row.data[col.key] as ReactNode)}
                 </td>
               ))}
               {showRowActions && (
-                <td className={cellClassName} ref={menuRef}>
-                  <div className="relative">
+                <td className={cellClassName}>
+                  <div className="relative" ref={menuRef}>
                     <button
                       className="p-1 hover:bg-neutral-100 rounded-full cursor-pointer"
                       onClick={() =>

@@ -9,7 +9,7 @@ export default function SupportCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">
+              <p className="text-[14px] text-[#1a1a1a] font-medium">
                 Total Float
               </p>
               <ZigZagIcon fill="#22C55E" />
@@ -17,17 +17,17 @@ export default function SupportCard() {
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">₦58,000</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">₦58,000</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#22C55E]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-semibold leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>
@@ -37,13 +37,13 @@ export default function SupportCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">Inflow</p>
+              <p className="text-[14px] text-[#1a1a1a] font-medium">Inflow</p>
               <ZigZagIcon fill="#22C55E" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">
                 ₦558,000
               </h2>
             </>
@@ -52,10 +52,10 @@ export default function SupportCard() {
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#22C55E]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-medium leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>
@@ -65,23 +65,23 @@ export default function SupportCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">Outflow</p>
+              <p className="text-[14px] text-[#1a1a1a] font-medium">Outflow</p>
               <ZigZagIcon fill="#22C55E" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">₦68,000</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">₦68,000</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#22C55E]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-medium leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>
@@ -91,23 +91,23 @@ export default function SupportCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">Pending</p>
+              <p className="text-[14px] text-[#1a1a1a] font-medium">Pending</p>
               <ZigZagIcon fill="#F53D3D" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">₦34,000</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">₦34,000</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#F53D3D]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-medium leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>

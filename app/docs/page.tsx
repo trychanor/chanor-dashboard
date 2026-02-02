@@ -21,6 +21,15 @@ import DateTimePicker from "../_ui/DateTimePicker";
 import Modal from "../_ui/Modal";
 import Table from "../_ui/Table";
 
+type DocsTableRow = {
+  ticketId: string;
+  sender: string;
+  receiver: string;
+  amount: string;
+  date: string;
+  status: React.ReactNode;
+};
+
 export default function DocsPage() {
   const [query, setQuery] = useState("");
   const [value, setValue] = useState("");
@@ -64,7 +73,7 @@ export default function DocsPage() {
     // API call, filter table, etc.
   };
 
-  const columns = [
+  const columns: Array<{ key: keyof DocsTableRow; label: string }> = [
     { key: "ticketId", label: "Ticket ID" },
     { key: "sender", label: "Sender" },
     { key: "receiver", label: "Receiver" },

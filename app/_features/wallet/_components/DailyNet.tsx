@@ -7,6 +7,15 @@ import LoaderMini from "@/app/_ui/LoaderMini";
 import { RotateCw } from "lucide-react";
 import { dailyNetData } from "../_data/wallet-dummy-data";
 
+type DailyNetRow = {
+  date: string;
+  transactions: string;
+  volume: string;
+  payouts: string;
+  net: string;
+  status: React.ReactNode;
+};
+
 export default function DailyNet() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -15,7 +24,7 @@ export default function DailyNet() {
     setTimeout(() => setIsRefreshing(false), 1500);
   };
 
-  const columns = [
+  const columns: Array<{ key: keyof DailyNetRow; label: string }> = [
     { key: "date", label: "Date" },
     { key: "transactions", label: "Total Transactions" },
     { key: "volume", label: "Volume" },
