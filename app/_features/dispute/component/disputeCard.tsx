@@ -9,25 +9,25 @@ export default function DisputeCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">
-                Open Ticket
+              <p className="text-[14px] text-[#1a1a1a] font-medium">
+                Open Tickets
               </p>
               <ZigZagIcon fill="#F53D3D" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">58</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">58</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#F53D3D]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-semibold leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>
@@ -37,25 +37,25 @@ export default function DisputeCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">
-                Resolved Ticket
+              <p className="text-[14px] text-[#1a1a1a] font-semibold">
+                Resolved Tickets
               </p>
               <ZigZagIcon fill="#22C55E" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">58</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">58</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#22C55E]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-semibold leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>
@@ -65,25 +65,25 @@ export default function DisputeCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">
-                Pending Ticket
+              <p className="text-[14px] text-[#1a1a1a] font-medium">
+                Pending Tickets
               </p>
               <ZigZagIcon fill="#22C55E" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">0</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">0</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#22C55E]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-semibold leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>
@@ -93,25 +93,25 @@ export default function DisputeCard() {
         <Card
           header={
             <div className="flex items-center justify-between">
-              <p className="text-[14px] text-[#1a1a1a] font-[500]">
-                Escalate Issue
+              <p className="text-[14px] text-[#1a1a1a] font-medium">
+                Escalated Issues
               </p>
               <ZigZagIcon fill="#22C55E" />
             </div>
           }
           main={
             <>
-              <h2 className="text-[24px] font-[600] text-[#1a1a1a]">10</h2>
+              <h2 className="text-[24px] font-semibold text-[#1a1a1a]">10</h2>
             </>
           }
           footer={
             <div className="flex">
               <ArrowUp className="w-5 h-5 text-[#22C55E]" />
               <p className="">
-                <span className="text-[12px] font-[600] leading-[100%]">
+                <span className="text-[12px] font-semibold leading-[100%]">
                   +8.5%
                 </span>
-                <span className="text-[12px] font-[500] leading-[100%] px-[5px]">
+                <span className="text-[12px] font-medium leading-[100%] px-[5px]">
                   Today
                 </span>
               </p>

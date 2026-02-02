@@ -1,9 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 
-const API_BASE_URL = "https://rabapay.onrender.com/api/v1";
+const BASE_API_URL = process.env.BASE_API_URL
 
 export async function testSupervisorUsersEndpoint() {
-  // ✅ auth() MUST be awaited in App Router
   const { getToken } = await auth();
 
   const token = await getToken();
@@ -13,7 +12,7 @@ export async function testSupervisorUsersEndpoint() {
   }
 
   const res = await fetch(
-    `${API_BASE_URL}/supervisors/analytics/users`,
+    `${BASE_API_URL}/supervisors/analytics/users`,
     {
       method: "GET",
       headers: {
