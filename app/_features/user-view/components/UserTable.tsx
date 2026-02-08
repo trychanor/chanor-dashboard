@@ -2,6 +2,10 @@
 import Status from "@/app/_ui/Status";
 import Table from "@/app/_ui/Table";
 import { useRouter } from "next/navigation";
+import { useCustomers } from "@/lib/hooks/use-customers";
+import Loading from "@/app/dashboard/loading";
+import { Customer as ApiCustomer } from "@/types";
+import Button from "@/app/_ui/Button";
 
 type UserTableRow = {
   userId: string;
@@ -13,6 +17,8 @@ type UserTableRow = {
 };
 
 export default function UserTable() {
+  const { data: customersData, isLoading, isError, refetch } = useCustomers({ page: 1, limit: 5, search: "" }) // params used here are for test purposes. Don't hardcode
+
   const router = useRouter();
   const columns: Array<{ key: keyof UserTableRow; label: string }> = [
     { key: "userId", label: "User ID" },
@@ -23,144 +29,45 @@ export default function UserTable() {
     { key: "accountStatus", label: "Account Status" },
   ];
 
-  const rows = [
-    {
-      id: 1,
+  const rows =
+    customersData?.data?.map((customer: ApiCustomer) => ({
+      id: customer.userId,
       data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
+        userId: customer.userId,
+        name: customer.name,
+        email: customer.email,
+        joinedDate: new Date(customer.dateRegistered).toLocaleDateString(),
+        lastActive: new Date(customer.lastActive).toLocaleString(),
         accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
+          <Status
+            label={customer.accountStatus}
+            appearance="subtle"
+            showDot={true}
+          />
         ),
       },
-    },
-    {
-      id: 2,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 3,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 4,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 5,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 6,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 7,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 8,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 9,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-    {
-      id: 10,
-      data: {
-        userId: "U-2301",
-        name: "David Ola",
-        email: "David@example.com",
-        joinedDate: "2025(2 month ago)",
-        lastActive: "2 hour ago",
-        accountStatus: (
-          <Status label="active" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-  ];
+    })) || [];
 
   const viewUser = (id: string) => {
-    console.log(id);
     router.push(`/dashboard/${id}`);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full min-h-[400px]">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full min-h-[400px] gap-4">
+        <p className="text-red-500">Failed to load customers</p>
+        <Button onClick={() => refetch()}>Retry</Button>
+      </div>
+    );
+  }
   return (
     <div>
       <Table
@@ -171,12 +78,13 @@ export default function UserTable() {
             label: "See Details",
             onClick: (row) => viewUser(row.userId),
           },
-          {
-            // icon: <Copy className="w-4 h-4" />,
-            onClick: (row) => console.log("Edit", row),
-            label: "Edit",
-          },
-          { label: "Delete" },
+
+          // We don't currently support deleting or editing users from the admin dashboard
+          // {
+          //   onClick: (row) => console.log("Edit", row),
+          //   label: "Edit",
+          // },
+          // { label: "Delete" },
         ]}
       />
     </div>

@@ -1,9 +1,11 @@
+"use client"
 import StatusDot from "@/app/_features/transaction/_ui/StatusDot";
 import BackButton from "@/app/_features/user-view/_ui/BackButton";
 import Button from "@/app/_ui/Button";
 import MediaButton from "@/app/_ui/MediaButton";
 import Status from "@/app/_ui/Status";
 import Table from "@/app/_ui/Table";
+import Loading from "../loading";
 import {
   ArrowRight,
   Banknote,
@@ -12,6 +14,9 @@ import {
   RotateCw,
   ShieldCheck,
 } from "lucide-react";
+import { useCustomer } from "@/lib/hooks/use-customers";
+import { useParams } from "next/navigation";
+
 
 type TransactionOverviewRow = {
   tfId: string;
@@ -29,6 +34,12 @@ type VoiceActivityRow = {
 };
 
 export default function UserViewDetails() {
+  const params = useParams()
+  const id = params?.userview as string
+
+  const { data: customerData, isLoading, isError, refetch } = useCustomer({ id, limit: 1 }) // params used here are for test purposes. Don't hardcode
+  const customer = customerData?.data;
+
   // TRANSACTION OVERVIEW
   const columns: Array<{ key: keyof TransactionOverviewRow; label: string }> = [
     { key: "tfId", label: "TF ID" },
@@ -37,40 +48,31 @@ export default function UserViewDetails() {
     { key: "date", label: "Date" },
     { key: "status", label: "Status" },
   ];
-  const rows = [
-    {
-      id: 1,
+  const rows =
+    customer?.transactionHistory?.map((txn) => ({
+      id: txn._id,
       data: {
-        tfId: "TXN-3949",
-        transfer: "Transfer",
-        amount: "$6,000",
-        date: "5 Oct, 2025",
+        tfId: txn.reference,
+        transfer: txn.service.replace(/_/g, " "),
+        amount: `₦${parseFloat(txn.amount.$numberDecimal).toLocaleString()}`,
+        date: new Date(txn.createdAt).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }),
         status: (
-          <Status label="successful" appearance="subtle" showDot={true} />
+          <Status
+            label={txn.status}
+            appearance={
+              txn.status === "successful" || txn.status === "success"
+                ? "subtle"
+                : "subtle"
+            }
+            showDot={true}
+          />
         ),
       },
-    },
-    {
-      id: 2,
-      data: {
-        tfId: "TXN-5642",
-        transfer: "Airtime",
-        amount: "$1,000",
-        date: "9 Oct, 2025",
-        status: <Status label="Failed" appearance="subtle" showDot={true} />,
-      },
-    },
-    {
-      id: 3,
-      data: {
-        tfId: "TXN-0759",
-        transfer: "Bill",
-        amount: "$10,000",
-        date: "2 Oct, 2025",
-        status: <Status label="Declined" appearance="subtle" showDot={true} />,
-      },
-    },
-  ];
+    })) || [];
 
   // VOICE ACTIVITY
   const columns1: Array<{ key: keyof VoiceActivityRow; label: string }> = [
@@ -79,80 +81,79 @@ export default function UserViewDetails() {
     { key: "transfer", label: "Transfer" },
     { key: "status", label: "Status" },
   ];
-  const rows1 = [
-    {
-      id: 1,
+  const rows1 =
+    customer?.voiceActivity?.map((voice) => ({
+      id: voice._id,
       data: {
-        command: "Raba send 50,000 to John",
-        date: "5 Oct, 2025",
+        command: voice.command,
+        date: new Date(voice.createdAt).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }),
         transfer: <MediaButton className="cursor-pointer" />,
         status: (
-          <Status label="Successful" appearance="subtle" showDot={true} />
+          <Status
+            label={voice.success ? "Successful" : "Failed"}
+            appearance="subtle"
+            showDot={true}
+          />
         ),
       },
-    },
-    {
-      id: 2,
-      data: {
-        command: "TXN-5642",
-        date: "9 Oct, 2025",
-        transfer: <MediaButton mode="pause" className="cursor-pointer" />,
-        status: <Status label="Failed" appearance="subtle" showDot={true} />,
-      },
-    },
-    {
-      id: 3,
-      data: {
-        command: "TXN-0759",
-        date: "2 Oct, 2025",
-        transfer: <MediaButton className="cursor-pointer" />,
-        status: (
-          <Status label="Successful" appearance="subtle" showDot={true} />
-        ),
-      },
-    },
-  ];
+    })) || [];
 
-  const activities = [
-    {
-      time: "11:12AM",
-      date: "12:02:2025",
-      type: "Voice Command",
-      description: "Raba sent ₦5,000 to john",
-      status: "Successful",
-    },
-    {
-      time: "11:12AM",
-      date: "12:02:2025",
-      type: "Transaction",
-      description: "Airtime Purchase ₦1,000",
-      status: "Failed",
-    },
-    {
-      time: "11:12AM",
-      date: "12:02:2025",
-      type: "Device",
-      description: "Android(Infinix X6525)",
-      status: "Successful",
-    },
-    {
-      time: "11:12AM",
-      date: "12:02:2025",
-      type: "Transaction",
-      description: "Transfer ₦5,000 to john",
-      status: "Declined",
-    },
-  ];
+  const activities =
+    customer?.recentActivities?.map((activity) => ({
+      time: new Date(activity.date).toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
+      date: new Date(activity.date)
+        .toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })
+        .replace(/\//g, ":"),
+      type:
+        activity.type === "transaction"
+          ? "Transaction"
+          : activity.type === "voice"
+            ? "Voice Command"
+            : "Device",
+      description: activity.description,
+      status:
+        activity.status.charAt(0).toUpperCase() + activity.status.slice(1),
+    })) || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full min-h-[500px]">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full min-h-[500px] gap-4">
+        <p className="text-red-500">Failed to load customer data</p>
+        <Button onClick={() => refetch()}>Retry</Button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <section className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-5">
           <BackButton />
           <h2 className="text-xl font-semibold text-neutral-black leading-4">
-            ID: U-20313
+            ID: {id}
           </h2>
         </div>
-        <Button variant="text">
+        <Button variant="text" onClick={() => refetch()}>
           <RotateCw />
           Refresh
         </Button>
@@ -166,18 +167,22 @@ export default function UserViewDetails() {
                 Personal Profile
               </h3>
               <p className="text-sm text-[#AEAEB2] leading-[18px]">
-                Last login : 13 Oct 2025, 12:45 PM{" "}
+                Last login :{" "}
+                {customer?.lastActive
+                  ? new Date(customer.lastActive).toLocaleString()
+                  : "N/A"}
               </p>
             </div>
             <div className="flex flex-col justify-center items-center mb-[91px]">
-              <div className="flex justify-center items-center mb-2 w-14 h-14 bg-[#F5F8FF] text-[20px] -tracking-[0.5px] leading-6 font-semibold text-[#2960EC] rounded-full">
-                AM
+              <div className="flex justify-center items-center mb-2 w-14 h-14 bg-[#F5F8FF] text-[20px] -tracking-[0.5px] leading-6 font-semibold text-[#2960EC] rounded-full uppercase">
+                {customer?.firstName?.[0]}
+                {customer?.lastName?.[0]}
               </div>
               <p className="text-[13px] text-left text-neutral-black leading-[18px] font-medium">
-                Jamesjohn@gmail.com
+                {customer?.email}
               </p>
               <h3 className="text-base text-left text-neutral-black leading-[18px] font-medium">
-                James John{" "}
+                {customer?.firstName} {customer?.lastName}
               </h3>
             </div>
             <ul className="flex flex-col gap-8">
@@ -186,7 +191,7 @@ export default function UserViewDetails() {
                   Gender
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  Not specified
+                  {customer?.gender || "Not specified"}
                 </p>
               </li>
               <li className="flex justify-between items-center">
@@ -194,7 +199,7 @@ export default function UserViewDetails() {
                   Phone Number
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  +2349283652735
+                  {customer?.phone || "N/A"}
                 </p>
               </li>
               <li className="flex justify-between items-center">
@@ -202,7 +207,7 @@ export default function UserViewDetails() {
                   Address
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  Lagos, Nigeria
+                  {customer?.address || "N/A"}
                 </p>
               </li>
               <li className="flex justify-between items-center">
@@ -210,27 +215,37 @@ export default function UserViewDetails() {
                   Date Of Birth
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  12, July 1999
+                  {customer?.dob || "N/A"}
                 </p>
               </li>
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Account Status
                 </h3>
-                <Status label="Active" appearance="subtle" showDot={true} />
+                <Status
+                  label={customer?.accountStatus || "Active"}
+                  appearance="subtle"
+                  showDot={true}
+                />
               </li>
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Risk Score
                 </h3>
-                <Status label="Low" appearance="subtle" showDot={false} />
+                <Status
+                  label={customer?.riskScore || "Low"}
+                  appearance="subtle"
+                  showDot={false}
+                />
               </li>
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Registered
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  2 March 2025
+                  {customer?.dateRegistered
+                    ? new Date(customer.dateRegistered).toLocaleDateString()
+                    : "N/A"}
                 </p>
               </li>
               <li className="flex justify-between items-center">
@@ -238,23 +253,7 @@ export default function UserViewDetails() {
                   KYC Level
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  Tier 2 Verified
-                </p>
-              </li>
-              <li className="flex justify-between items-center">
-                <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
-                  BVN
-                </h3>
-                <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  98293948403
-                </p>
-              </li>
-              <li className="flex justify-between items-center">
-                <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
-                  NIN
-                </h3>
-                <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  48509692789
+                  Tier {customer?.kyc?.tier || 0}
                 </p>
               </li>
               <li className="flex justify-between items-center">
@@ -262,7 +261,7 @@ export default function UserViewDetails() {
                   Device
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  Iphone(17)
+                  {customer?.device || "N/A"}
                 </p>
               </li>
             </ul>
@@ -278,18 +277,24 @@ export default function UserViewDetails() {
                 </div>
                 <div className="flex items-center gap-2">
                   <h3 className="flex items-center gap-[5px] text-2xl font-semibold leading-5 -tracking-[0.25px] text-neeutral-black">
-                    <ChartSpline className="w-4 h-4 text-green-primary" />
-                    ₦12,500
+                    <ChartSpline className="w-4 h-4 text-green-primary" />₦
+                    {customer?.balance?.toLocaleString() || 0}
                   </h3>
                   <p className="flex text-[15px] font-bold -leading-[0.33px] text-red-primary">
                     <MoveDown className="w-4 h-4" />
-                    -3%
+                    {customer?.balanceChange || 0}%
                   </p>
                 </div>
                 <div className="flex items-center gap-4 text-[15px] text-neutral-400 -leading-[0.33px] font-medium mb-4">
                   <span>Last Deposit</span>
-                  <span>$5,000</span>
-                  <span>13 Oct, 2025</span>
+                  <span>
+                    ₦{customer?.lastDeposit?.amount?.toLocaleString() || 0}
+                  </span>
+                  <span>
+                    {customer?.lastDeposit?.date
+                      ? new Date(customer.lastDeposit.date).toLocaleDateString()
+                      : "N/A"}
+                  </span>
                 </div>
               </div>
               <div className="max-w-[307px]  h-48 border border-[#EDECEC] w-full bg-white p-4 rounded-lg flex flex-col box-shadow-[0px_4px_4px_0_#EDECEC/25]">
@@ -305,7 +310,7 @@ export default function UserViewDetails() {
                       Failed Login
                     </p>
                     <p className="text-sm text-neutral-black -leading-[0.33px] font-medium">
-                      3
+                      {customer?.securityOverview?.failedLogins || 0}
                     </p>
                   </li>
                   <li className="flex justify-between items-center">
@@ -313,15 +318,17 @@ export default function UserViewDetails() {
                       Locked Account
                     </p>
                     <p className="text-sm text-neutral-black -leading-[0.33px] font-medium">
-                      No
+                      {customer?.securityOverview?.lockedAccount || "No"}
                     </p>
                   </li>
                   <li className="flex justify-between items-center">
                     <p className="text-sm text-neutral-black -leading-[0.33px] font-medium">
-                      Active Setion
+                      Active Session
                     </p>
                     <p className="text-sm text-neutral-black -leading-[0.33px] font-medium">
-                      Mobile
+                      {customer?.securityOverview?.activeSession
+                        ? "Yes"
+                        : "No"}
                     </p>
                   </li>
                   <li className="flex justify-between items-center">
@@ -329,7 +336,7 @@ export default function UserViewDetails() {
                       Fraud Alert
                     </p>
                     <p className="text-sm text-neutral-black -leading-[0.33px] font-medium">
-                      None
+                      {customer?.securityOverview?.fraudAlerts || "None"}
                     </p>
                   </li>
                 </ul>
@@ -419,11 +426,39 @@ export default function UserViewDetails() {
             <h3 className="text-[20px] font-medium -tracking-[0.33px] text-neutral-black">
               Ticket History
             </h3>
-            <div className="flex justify-center items-center">
-              <p className="flex justify-center items-center text-[15px] text-[#AEAEB2] -tracking-[0.33px] font-medium">
-                No ticket issues yet
-              </p>
-            </div>
+            {customer?.ticketHistory && customer.ticketHistory.length > 0 ? (
+              <div className="flex flex-col gap-4 mt-4">
+                {customer.ticketHistory.map((ticket) => (
+                  <div
+                    key={ticket._id}
+                    className="border border-[#EDECEC] p-4 rounded-lg"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="text-sm font-medium text-neutral-black">
+                        {ticket.subject}
+                      </h4>
+                      <Status
+                        label={ticket.status}
+                        appearance="subtle"
+                        showDot={true}
+                      />
+                    </div>
+                    <p className="text-xs text-[#AEAEB2] mb-2">
+                      {ticket.description}
+                    </p>
+                    <p className="text-xs text-[#AEAEB2]">
+                      {new Date(ticket.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex justify-center items-center h-[200px]">
+                <p className="flex justify-center items-center text-[15px] text-[#AEAEB2] -tracking-[0.33px] font-medium">
+                  No ticket issues yet
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
