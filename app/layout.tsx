@@ -3,7 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import CustomClerkProvider from "./providers/clerk-provider";
+import QueryProvider from "./providers/query-provider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -23,10 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <CustomClerkProvider>
       <html lang="en">
         <body className={`${poppins.className} antialiased`}>
-          <main>{children}</main>
+          <QueryProvider>
+            {children}
+          </QueryProvider>
           <ToastContainer
             position="top-left"
             autoClose={5000}
@@ -42,6 +45,6 @@ export default function RootLayout({
           />
         </body>
       </html>
-    </ClerkProvider>
+    </CustomClerkProvider>
   );
 }

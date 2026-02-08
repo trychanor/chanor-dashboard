@@ -40,7 +40,7 @@ export default function Sidebar() {
           src="/chanor-logo.png"
           width={186}
           height={80}
-          className="scale-150"
+          className="scale-150 h-auto w-auto"
           alt="Chanor Logo"
         />
       </div>

@@ -33,7 +33,7 @@ export default function Header() {
         </button>
 
         <div className="flex items-center gap-3">
-          <UserButton />
+          <UserButton/>
 
           <div className="text-left">
             <h3 className="text-base font-semibold tracking-[-0.33px] text-black">
