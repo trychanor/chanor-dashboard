@@ -6,7 +6,7 @@ import {
 } from "@/types";
 import { safeApiCall, api } from "../clients";
 
-type GetNotificationsProps = {
+export type GetNotificationsProps = {
   page: number;
   limit: number;
   read: boolean;
