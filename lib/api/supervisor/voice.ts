@@ -6,15 +6,11 @@ import {
 } from "@/types";
 import { safeApiCall, api } from "../clients";
 
-type GetUserVoiceProps = {
-  period: number;
-};
-
 type GetVoiceProps = {
   period: number;
 };
 
-export const getUserVoice = async ({ period }: GetUserVoiceProps) =>
+export const getUserVoice = async ({ period }: GetVoiceProps) =>
   safeApiCall(
     api
       .get("analytics/voice/users", { searchParams: { period } })

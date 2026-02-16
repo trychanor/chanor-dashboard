@@ -1,7 +1,7 @@
 import { ApiResponseWithPagination, Transactions } from "@/types";
 import { safeApiCall, api } from "../clients";
 
-type GetTransactionsProps = {
+export type GetTransactionsProps = {
   page: number;
   limit: number;
   status?: string;

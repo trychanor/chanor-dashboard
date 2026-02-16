@@ -9,48 +9,32 @@ import {
 } from "@/types";
 import { safeApiCall, api } from "../clients";
 
-type GetBalanceProps = {
-  period: number;
-};
+export type GetTransactionsAnalyticsProps = {
+  period: number
+}
 
-type GetInflowOutflowProps = {
-  period: number;
-};
-
-type GetProfitBreakdownProps = {
-  period: number;
-};
-
-type GetProfitProps = {
-  period: number;
-};
-
-type GetTransactionVolumeProps = {
-  period: number;
-};
-
-export const getBalance = async ({ period }: GetBalanceProps) =>
+export const getBalance = async ({ period }: GetTransactionsAnalyticsProps) =>
   safeApiCall(
     api
       .get("analytics/balance", { searchParams: { period } })
       .json<ApiResponse<Balance>>(),
   );
 
-export const getInflowOutflow = async ({ period }: GetInflowOutflowProps) =>
+export const getInflowOutflow = async ({ period }: GetTransactionsAnalyticsProps) =>
   safeApiCall(
     api
       .get("analytics/inflow-outflow", { searchParams: { period } })
       .json<ApiResponseWithMetadata<InflowOutflow, { period: string }>>(),
   );
 
-export const getProfitBreakdown = async ({ period }: GetProfitBreakdownProps) =>
+export const getProfitBreakdown = async ({ period }: GetTransactionsAnalyticsProps) =>
   safeApiCall(
     api
       .get("analytics/profit-breakdown", { searchParams: { period } })
       .json<ApiResponseWithMetadata<ProfitBreakdown, { period: string }>>(),
   );
 
-export const getProfit = async ({ period }: GetProfitProps) =>
+export const getProfit = async ({ period }: GetTransactionsAnalyticsProps) =>
   safeApiCall(
     api
       .get("analytics/profit", { searchParams: { period } })
@@ -59,7 +43,7 @@ export const getProfit = async ({ period }: GetProfitProps) =>
 
 export const getTransactionVolume = async ({
   period,
-}: GetTransactionVolumeProps) =>
+}: GetTransactionsAnalyticsProps) =>
   safeApiCall(
     api
       .get("analytics/transaction-volume", { searchParams: { period } })

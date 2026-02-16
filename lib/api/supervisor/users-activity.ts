@@ -1,22 +1,18 @@
 import { ApiResponseWithMetadata, ActivitySource, User } from "@/types";
 import { safeApiCall, api } from "../clients";
 
-type GetActivitySourceProps = {
+export type GetUsersActivityProps = {
   period: number;
 };
 
-type GetUsersProps = {
-  period: number;
-};
-
-export const getActivitySource = async ({ period }: GetActivitySourceProps) =>
+export const getActivitySource = async ({ period }: GetUsersActivityProps) =>
   safeApiCall(
     api
       .get("analytics/activity-source", { searchParams: { period } })
       .json<ApiResponseWithMetadata<ActivitySource, { period: string }>>(),
   );
 
-export const getUsers = async ({ period }: GetUsersProps) =>
+export const getUsers = async ({ period }: GetUsersActivityProps) =>
   safeApiCall(
     api
       .get("analytics/users", { searchParams: { period } })
