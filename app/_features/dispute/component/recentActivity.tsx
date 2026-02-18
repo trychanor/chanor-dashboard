@@ -26,7 +26,7 @@ export default function RecentActivity() {
 
   return (
     <div className="md:px-6 px-4 bg-white rounded-lg">
-      <h2 className="text-[20px] font-medium leading-[100%] text-(--neutral-black) py-10">
+      <h2 className="text-[20px] font-medium leading-[100%] text-neutral-black py-10">
         Recent Activities
       </h2>
 
@@ -44,7 +44,7 @@ export default function RecentActivity() {
                   <p className="text-[12px] font-semibold leading-5 text-[#9D9C9C]">
                     {item.time}
                   </p>
-                  <p className="text-[14px] font-medium leading-5 text-(--neutral-black)">
+                  <p className="text-[14px] font-medium leading-5 text-neutral-black">
                     {item.date}
                   </p>
                 </div>
@@ -54,8 +54,8 @@ export default function RecentActivity() {
                   <span
                     className={`w-3.5 h-3.5 rounded-full block border-[3px] ${
                       item.status === "success"
-                        ? "bg-(--green-primary) border-[#d0f4d3]"
-                        : "bg-(--red-primary) border-[#fdd8d8]"
+                        ? "bg-green-primary border-[#d0f4d3]"
+                        : "bg-red-primary border-[#fdd8d8]"
                     }`}
                   ></span>
                 </div>
@@ -64,7 +64,7 @@ export default function RecentActivity() {
                 <div
                   className="bg-white border rounded-[5px] border-[#e3e3e5] px-4 py-2 w-[330px] ml-2 cursor-pointer hover:bg-gray-50 transition"
                 >
-                  <p className="text-[13px] font-medium leading-[18px] text-(--neutral-black)">
+                  <p className="text-[13px] font-medium leading-[18px] text-neutral-black">
                     {item.message}
                   </p>
                 </div>
