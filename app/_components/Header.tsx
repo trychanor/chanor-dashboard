@@ -1,19 +1,28 @@
 "use client";
 
-import { Sun, Moon, Bell, Search } from "lucide-react";
+import { Sun, Moon, Bell, Search, BookOpenText } from "lucide-react";
+import Link from "next/link"
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image"
+import { useEnvironment } from "../providers/environment-provider";
 
 export default function Header() {
   const { user } = useUser();
+  const { isLocal } = useEnvironment();
+
   return (
     <header className=" h-20 px-8 flex items-center justify-end gap-[26px]">
+      {isLocal && (
+        <Link href={"/docs"} className="p-2 bg-[#EF5A22] text-white rounded-full">
+          <BookOpenText size={18} />
+        </Link>
+      )}
       <div className="relative max-w-[450px] flex-1 mr-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
         <input
           type="text"
           placeholder="Search"
-          className="w-full h-12 pl-12 pr-4 bg-[#F6F7F9] rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-[#E86A33]"
+          className="w-full h-12 pl-12 pr-4 bg-gray-200 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-[#E86A33]"
         />
       </div>
 
