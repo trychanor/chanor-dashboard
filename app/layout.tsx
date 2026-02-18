@@ -4,6 +4,7 @@ import "./globals.css";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomClerkProvider from "./providers/clerk-provider";
+import { EnvironmentProvider } from "./providers/environment-provider";
 import QueryProvider from "./providers/query-provider";
 
 const poppins = Poppins({
@@ -27,9 +28,11 @@ export default function RootLayout({
     <CustomClerkProvider>
       <html lang="en">
         <body className={`${poppins.className} antialiased`}>
-          <QueryProvider>
-            {children}
-          </QueryProvider>
+          <EnvironmentProvider environment={process.env.APP_ENV!} >
+            <QueryProvider>
+              {children}
+            </QueryProvider>
+          </EnvironmentProvider>
           <ToastContainer
             position="top-left"
             autoClose={5000}
