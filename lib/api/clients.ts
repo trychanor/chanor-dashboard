@@ -4,14 +4,19 @@ import { HTTPError } from "ky";
 import { auth } from "@clerk/nextjs/server";
 import { ApiResult } from "@/types";
 
+const isLocal = process.env.APP_ENV === "local";
+const BASE_API_URL = isLocal
+  ? process.env.BASE_API_URL_LOCAL
+  : process.env.BASE_API_URL_REMOTE;
+
 /**
  * Centralized Ky instance for Server-Side API calls.
  * This ensures all requests to our backend are authenticated
  * and include the required security headers.
  */
 export const api = ky.create({
-  prefixUrl: process.env.BASE_API_URL,
-  timeout: 60000, // kept at 60s due to the nature of our server for now
+  prefixUrl: BASE_API_URL,
+  timeout: 60000, // kept at 60s due to the nature of our remote server for now
   hooks: {
     beforeRequest: [
       async (request) => {
