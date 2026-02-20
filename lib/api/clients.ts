@@ -4,7 +4,7 @@ import { HTTPError } from "ky";
 import { auth } from "@clerk/nextjs/server";
 import { ApiResult } from "@/types";
 
-const isLocal = process.env.APP_ENV === "local";
+const isLocal = process.env.API_ENV === "local";
 const BASE_API_URL = isLocal
   ? process.env.BASE_API_URL_LOCAL
   : process.env.BASE_API_URL_REMOTE;
