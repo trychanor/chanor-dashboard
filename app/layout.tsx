@@ -5,6 +5,8 @@ import { Bounce, ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomClerkProvider from "./providers/clerk-provider";
 import { EnvironmentProvider } from "./providers/environment-provider";
+import { headers } from "next/headers";
+import MobileAwareProvider from "./providers/mobile-aware-provider";
 import QueryProvider from "./providers/query-provider";
 
 const poppins = Poppins({
@@ -19,20 +21,37 @@ export const metadata: Metadata = {
   description: "Chanor admin dashboard - for analytics, monitoring and support",
 };
 
-export default function RootLayout({
+function isLikelyPhoneUserAgent(agent: string) {
+  const userAgent = agent.toLowerCase();
+
+  return (
+    /iphone|ipod|windows phone|blackberry|opera mini/.test(
+      userAgent
+    ) ||
+    (/android/.test(userAgent) &&
+      /mobile/.test(userAgent) &&
+      !/tablet/.test(userAgent))
+  );
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerStore = await headers();
+  const userAgent = headerStore.get("user-agent") ?? "";
+  const initialIsMobile = isLikelyPhoneUserAgent(userAgent);
+
   return (
     <CustomClerkProvider>
       <html lang="en">
         <body className={`${poppins.className} antialiased`}>
-          <EnvironmentProvider environment={process.env.APP_ENV!} >
-            <QueryProvider>
-              {children}
-            </QueryProvider>
-          </EnvironmentProvider>
+          <MobileAwareProvider initialIsMobile={initialIsMobile}>
+            <EnvironmentProvider environment={process.env.APP_ENV!}>
+              <QueryProvider>{children}</QueryProvider>
+            </EnvironmentProvider>
+          </MobileAwareProvider>
           <ToastContainer
             position="top-left"
             autoClose={5000}
