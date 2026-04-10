@@ -80,7 +80,7 @@ function MobileBlockedState({
                     Allowed devices
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-neutral-600">
-                    Tablets and larger screens from 768px upward.
+                    Tablets and larger screens.
                   </p>
                 </div>
               </div>
@@ -94,7 +94,7 @@ function MobileBlockedState({
                     Best experience
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-neutral-600">
-                    Reopen this project on a tablet, laptop, or desktop browser.
+                    Reopen this application on a tablet, laptop, or desktop browser.
                   </p>
                 </div>
               </div>
@@ -110,7 +110,7 @@ function MobileBlockedState({
 
             <p className="text-center text-xs leading-5 text-neutral-500">
               If you already switched devices, tap try again to refresh the
-              screen check.
+              screen and check.
             </p>
           </div>
         </div>
