@@ -16,9 +16,9 @@ export const getTransactions = async ({
   search,
   type,
 }: GetTransactionsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("transactions", {
+      .get("supervisors/transactions", {
         searchParams: { page, limit, status, type, search },
       })
       .json<ApiResponseWithPagination<Transactions[]>>(),

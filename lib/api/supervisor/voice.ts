@@ -11,17 +11,17 @@ type GetVoiceProps = {
 };
 
 export const getUserVoice = async ({ period }: GetVoiceProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/voice/users", { searchParams: { period } })
+      .get("supervisors/analytics/voice/users", { searchParams: { period } })
       .json<
         ApiResponseWithPaginationAndMetadata<UserVoice[], { period: string }>
       >(),
   );
 
 export const getVoice = async ({ period }: GetVoiceProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/voice", { searchParams: { period } })
+      .get("supervisors/analytics/voice", { searchParams: { period } })
       .json<ApiResponseWithMetadata<Voice, { period: string }>>(),
   );

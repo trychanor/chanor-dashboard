@@ -8,13 +8,9 @@ import {
 } from "../api/supervisor/customers";
 
 export async function getCustomersAction(params: GetCustomersProps) {
-  const { data, error } = await getCustomers(params);
-  if (error) throw new Error(error);
-  return data;
+  return getCustomers(params);
 }
 
 export async function getCustomerAction(params: GetCustomerProps) {
-  const { data, error } = await getCustomer(params);
-  if (error) throw new Error(error);
-  return data;
+  return getCustomer(params);
 }

@@ -13,15 +13,15 @@ export type GetCustomersProps = {
 };
 
 export const getCustomer = async ({ id, limit }: GetCustomerProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get(`customers/${id}`, { searchParams: { limit } })
+      .get(`supervisors/customers/${id}`, { searchParams: { limit } })
       .json<ApiResponse<Customer>>(),
   );
 
 export const getCustomers = ({ page, limit, search }: GetCustomersProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("customers", { searchParams: { page, limit, search } })
+      .get("supervisors/customers", { searchParams: { page, limit, search } })
       .json<ApiResponseWithPagination<Customer[]>>(),
   );

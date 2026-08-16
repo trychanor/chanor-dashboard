@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import { Monitor, Smartphone, Tablet } from "lucide-react";
-import Button from "../_ui/Button";
+import Button from "../components/ui/Button";
 
 const MOBILE_MAX_WIDTH = 767;
 const MOBILE_MEDIA_QUERY = `(max-width: ${MOBILE_MAX_WIDTH}px)`;
