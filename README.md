@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chanor Dashboard
 
-## Getting Started
+Chanor Dashboard is a Next.js admin app.
 
-First, run the development server:
+It supports supervisor analytics, customer review, disputes, support, wallets, and security views.
+
+## Requirements
+
+- Use Node.js 20 or later.
+- Use npm for package management.
+- Configure Clerk and backend API variables in a local env file.
+
+## Setup
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a local env file:
+
+```bash
+cp .env.example .env.local
+```
+
+Set the required values in `.env.local`.
+
+## Custom Port
+
+The app uses `PORT` to set the Next.js port.
+
+If `PORT` is not set, the app uses `3000`.
+
+Set a custom port in `.env.local`:
+
+```bash
+PORT=3001
+```
+
+Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the app at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3001
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can also set `PORT` from your shell.
 
-## Learn More
+PowerShell:
 
-To learn more about Next.js, take a look at the following resources:
+```powershell
+$env:PORT=3001
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Bash:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+PORT=3001 npm run dev
+```
 
-## Deploy on Vercel
+The same `PORT` setting also applies to:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+
+- `npm run dev` starts Next.js in development mode.
+- `npm run build` creates a production build.
+- `npm run start` starts the production server.
+- `npm run lint` runs ESLint.
+
+## Branch Workflow
+
+Use `main` for production-ready code.
+
+Use `dev` for shared integration work.
+
+Update `dev` only through pull requests.
+
+Create personal workspace branches for feature work.
+
+Use this branch format:
+
+```text
+pws/<name>
+```
+
+Example:
+
+```text
+pws/john
+```
+
+Here, `pws` means personal workspace.
+
+Create your workspace branch from `dev`.
+
+Work in your workspace branch.
+
+Open a pull request into `dev` when the work is ready.

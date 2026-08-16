@@ -14,38 +14,42 @@ export type GetTransactionsAnalyticsProps = {
 }
 
 export const getBalance = async ({ period }: GetTransactionsAnalyticsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/balance", { searchParams: { period } })
+      .get("supervisors/analytics/balance", { searchParams: { period } })
       .json<ApiResponse<Balance>>(),
   );
 
 export const getInflowOutflow = async ({ period }: GetTransactionsAnalyticsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/inflow-outflow", { searchParams: { period } })
+      .get("supervisors/analytics/inflow-outflow", { searchParams: { period } })
       .json<ApiResponseWithMetadata<InflowOutflow, { period: string }>>(),
   );
 
 export const getProfitBreakdown = async ({ period }: GetTransactionsAnalyticsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/profit-breakdown", { searchParams: { period } })
+      .get("supervisors/analytics/profit-breakdown", {
+        searchParams: { period },
+      })
       .json<ApiResponseWithMetadata<ProfitBreakdown, { period: string }>>(),
   );
 
 export const getProfit = async ({ period }: GetTransactionsAnalyticsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/profit", { searchParams: { period } })
+      .get("supervisors/analytics/profit", { searchParams: { period } })
       .json<ApiResponseWithMetadata<Profit, { period: string }>>(),
   );
 
 export const getTransactionVolume = async ({
   period,
 }: GetTransactionsAnalyticsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/transaction-volume", { searchParams: { period } })
+      .get("supervisors/analytics/transaction-volume", {
+        searchParams: { period },
+      })
       .json<ApiResponseWithMetadata<TransactionVolume, { period: string }>>(),
   );

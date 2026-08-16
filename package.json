@@ -1,12 +1,12 @@
 {
-  "name": "raba-dashboard",
-  "version": "0.1.0",
+  "name": "chanor-dashboard",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/next-with-env-port.mjs dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "node scripts/next-with-env-port.mjs start",
+    "lint": "eslint --max-warnings=0"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.36.3",
@@ -30,8 +30,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "baseline-browser-mapping": "^2.9.19",
-    "eslint": "^10.0.1",
-    "eslint-config-next": "^0.2.4",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

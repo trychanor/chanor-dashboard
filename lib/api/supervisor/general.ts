@@ -17,11 +17,13 @@ export const getNotifications = async ({
   limit,
   read,
 }: GetNotificationsProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("notifications", { searchParams: { page, limit, read } })
+      .get("supervisors/notifications", { searchParams: { page, limit, read } })
       .json<ApiResponseWithPagination<Notification[]>>(),
   );
 
 export const getSettlements = async () =>
-  safeApiCall(api.get("settlement").json<ApiResponse<Settlement>>());
+  safeApiCall(() =>
+    api.get("supervisors/settlement").json<ApiResponse<Settlement>>(),
+  );

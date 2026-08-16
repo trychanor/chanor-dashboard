@@ -13,7 +13,7 @@ interface EnvironmentContextType {
 }
 
 const EnvironmentContext = createContext<EnvironmentContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function EnvironmentProvider({
@@ -43,7 +43,9 @@ export function EnvironmentProvider({
 export function useEnvironment() {
   const context = useContext(EnvironmentContext);
   if (context === undefined) {
-    throw new Error("useEnvironment must be used within an EnvironmentProvider");
+    throw new Error(
+      "useEnvironment must be used within an EnvironmentProvider",
+    );
   }
   return context;
 }

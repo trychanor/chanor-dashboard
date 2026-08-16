@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Button from "./_ui/Button";
+import Button from "./components/ui/Button";
 
 interface GlobalErrorProps {
   error?: Error;

@@ -48,7 +48,7 @@ export default async function RootLayout({
       <html lang="en">
         <body className={`${poppins.className} antialiased`}>
           <MobileAwareProvider initialIsMobile={initialIsMobile}>
-            <EnvironmentProvider environment={process.env.APP_ENV!}>
+            <EnvironmentProvider environment={process.env.APP_ENV || ""}>
               <QueryProvider>{children}</QueryProvider>
             </EnvironmentProvider>
           </MobileAwareProvider>

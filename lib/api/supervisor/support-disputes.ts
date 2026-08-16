@@ -6,8 +6,8 @@ export type GetProfitProps = {
 };
 
 export const getProfit = async ({ period }: GetProfitProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/disputes", { searchParams: { period } })
+      .get("supervisors/analytics/disputes", { searchParams: { period } })
       .json<ApiResponseWithMetadata<Profit, { period: string }>>(),
   );

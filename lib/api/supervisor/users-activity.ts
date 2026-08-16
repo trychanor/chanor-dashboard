@@ -6,15 +6,17 @@ export type GetUsersActivityProps = {
 };
 
 export const getActivitySource = async ({ period }: GetUsersActivityProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/activity-source", { searchParams: { period } })
+      .get("supervisors/analytics/activity-source", {
+        searchParams: { period },
+      })
       .json<ApiResponseWithMetadata<ActivitySource, { period: string }>>(),
   );
 
 export const getUsers = async ({ period }: GetUsersActivityProps) =>
-  safeApiCall(
+  safeApiCall(() =>
     api
-      .get("analytics/users", { searchParams: { period } })
+      .get("supervisors/analytics/users", { searchParams: { period } })
       .json<ApiResponseWithMetadata<User, { period: string }>>(),
   );

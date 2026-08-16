@@ -16,7 +16,7 @@ const BASE_API_URL = isLocal
  */
 export const api = ky.create({
   prefixUrl: BASE_API_URL,
-  timeout: 60000, // kept at 60s due to the nature of our remote server for now
+  timeout: 10000, // 10s
   hooks: {
     beforeRequest: [
       async (request) => {
@@ -44,10 +44,10 @@ export const api = ky.create({
 });
 
 export async function safeApiCall<T>(
-  promise: Promise<T>,
+  request: Promise<T> | (() => Promise<T>),
 ): Promise<ApiResult<T>> {
   try {
-    const data = await promise;
+    const data = await (typeof request === "function" ? request() : request);
     return { data, error: null };
   } catch (error) {
     if (error instanceof HTTPError) {
@@ -63,6 +63,12 @@ export async function safeApiCall<T>(
       return {
         data: null,
         error: message,
+      };
+    }
+    if (error instanceof TypeError && error.message.includes("parse URL")) {
+      return {
+        data: null,
+        error: "Supervisor API base URL is not configured correctly",
       };
     }
     return { data: null, error: "An unexpected connection error occurred" };
