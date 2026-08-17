@@ -6,7 +6,7 @@ It supports supervisor analytics, customer review, disputes, support, wallets, a
 
 ## Requirements
 
-- Use Node.js 20 or later.
+- Use Node.js 24 or later.
 - Use npm for package management.
 - Configure Clerk and backend API variables in a local env file.
 
