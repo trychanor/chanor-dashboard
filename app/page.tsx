@@ -1,9 +1,5 @@
-import { SignIn } from "@clerk/nextjs";
+import AdminLogin from "./components/feature/auth/AdminLogin";
 
 export default function Page() {
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-[#F9FAFB]">
-      <SignIn routing="hash" />
-    </div>
-  );
+  return <AdminLogin />;
 }
