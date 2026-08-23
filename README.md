@@ -107,3 +107,13 @@ Create your workspace branch from `dev`.
 Work in your workspace branch.
 
 Open a pull request into `dev` when the work is ready.
+
+## Pull Request Checks
+
+GitHub Actions checks each pull request to `dev` and `main`.
+
+The workflow runs type checks, linting, and a production build.
+
+After the checks pass, it requests a review from `PR_REVIEWER`.
+
+`PR_REVIEWER` is set as a repository variable with the reviewer's GitHub username.
