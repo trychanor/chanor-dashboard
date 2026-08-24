@@ -25,8 +25,8 @@ export default function AdminLogin() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const resendTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const OTP_DURATION = 10 * 60; // 10 minutes
-  const RESEND_COOLDOWN = 30; // 30 seconds
+  const OTP_DURATION = 10 * 60;
+  const RESEND_COOLDOWN = 30;
 
   useEffect(() => {
     return () => {
@@ -166,8 +166,12 @@ export default function AdminLogin() {
 
     try {
       await adminLoginEmailSchema.validate({ email: email.trim() });
-    } catch (validationError: any) {
-      setError(validationError.message);
+    } catch (validationError) {
+      if (validationError instanceof Error) {
+        setError(validationError.message);
+      } else {
+        setError("Invalid input");
+      }
       return;
     }
 
@@ -194,8 +198,12 @@ export default function AdminLogin() {
 
     try {
       await adminLoginOtpSchema.validate({ code: code.trim() });
-    } catch (validationError: any) {
-      setError(validationError.message);
+    } catch (validationError) {
+      if (validationError instanceof Error) {
+        setError(validationError.message);
+      } else {
+        setError("Invalid input");
+      }
       return;
     }
 
