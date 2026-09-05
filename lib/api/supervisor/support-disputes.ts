@@ -1,5 +1,5 @@
 import { ApiResponseWithMetadata, Profit } from "@/types";
-import { safeApiCall, api } from "../clients";
+import { safeApiCall, api } from "../http-client";
 
 export type GetProfitProps = {
   period: number;

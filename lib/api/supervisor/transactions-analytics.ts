@@ -7,7 +7,7 @@ import {
   Profit,
   TransactionVolume,
 } from "@/types";
-import { safeApiCall, api } from "../clients";
+import { safeApiCall, api } from "../http-client";
 
 export type GetTransactionsAnalyticsProps = {
   period: number
