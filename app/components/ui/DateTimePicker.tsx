@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import { Calendar } from "lucide-react";
+import { FaCalendar } from "react-icons/fa6";
 import { format } from "date-fns";
 
 interface DateTimePickerProps {
@@ -45,7 +45,7 @@ export default function DateTimePicker({
         "
       >
         <div className="flex items-center gap-2 text-left">
-          <Calendar className="w-5 h-5 text-gray-600" />
+          <FaCalendar className="w-5 h-5 text-gray-600" />
 
           <span className="text-[14px] text-gray-800">
             {selected ? format(selected, "MMM d, yyyy – hh:mm a") : placeholder}

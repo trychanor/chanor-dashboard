@@ -4,7 +4,7 @@ import { useState } from "react";
 import Button from "@/app/components/ui/Button";
 import Table from "@/app/components/ui/Table";
 import LoaderMini from "@/app/components/ui/LoaderMini";
-import { RotateCw } from "lucide-react";
+import { FaRotateRight } from "react-icons/fa6";
 import { businessWalletData } from "../../../mocks/wallet-dummy-data";
 
 type BusinessWalletRow = {
@@ -42,7 +42,7 @@ export default function BusinessWallet() {
           onClick={handleRefresh}
           additionalStyles="cursor-pointer text-sm p-2 gap-2"
         >
-          {isRefreshing ? <LoaderMini size={16} /> : <RotateCw size={16} />} 
+          {isRefreshing ? <LoaderMini size={16} /> : <FaRotateRight size={16} />}
         </Button>
       </div>
 

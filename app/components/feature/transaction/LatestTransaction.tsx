@@ -1,6 +1,6 @@
 import Button from "@/app/components/ui/Button";
 import Status from "@/app/components/ui/Status";
-import { MoveRight } from "lucide-react";
+import { FaArrowRight } from "react-icons/fa6";
 import StatusDot from "../../ui/StatusDot";
 import { useTransactionViewStore } from "@/app/store/useTransactionViewStore";
 
@@ -52,7 +52,7 @@ export default function LatestTransaction() {
           additionalStyles="cursor-pointer text-sm p-2"
           onClick={() => setShowAllTransactions(true)}
         >
-          View All <MoveRight size={16} />
+          View All <FaArrowRight size={16} />
         </Button>
       </div>
       <ul className="grid divide-y divide-[#D9D9D9]">

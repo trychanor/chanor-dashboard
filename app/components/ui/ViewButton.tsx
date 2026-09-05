@@ -1,4 +1,4 @@
-import { Eye } from "lucide-react";
+import { FaEye } from "react-icons/fa6";
 import { ButtonHTMLAttributes } from "react";
 import Button from "./Button";
 
@@ -23,7 +23,7 @@ export default function ViewButton({
       additionalStyles={`shrink-0 px-3 py-2 text-sm ${additionalStyles}`}
       {...props}
     >
-      <Eye size={16} />
+      <FaEye size={16} />
       {label}
     </Button>
   );

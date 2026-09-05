@@ -1,7 +1,7 @@
 "use client";
 // THIS IS THE USAGE FOR ALL REUSABLE UI
 
-import { Activity, ArrowUp, MoveRight, User } from "lucide-react";
+import { FaArrowRight, FaArrowUp, FaChartLine, FaUser } from "react-icons/fa6";
 import Button from "../../components/ui/Button";
 import LoaderMini from "../../components/ui/LoaderMini";
 import Status from "../../components/ui/Status";
@@ -222,7 +222,7 @@ export default function DocsPage() {
           <Button variant="outline">Go Back</Button>
           <Button variant="success">Operation Successful</Button>
           <Button variant="text">
-            View All <MoveRight />
+            View All <FaArrowRight />
           </Button>
         </div>
       </section>
@@ -392,7 +392,7 @@ export default function DocsPage() {
             header={
               <div className="flex items-center justify-between">
                 <p className="text-[14px] text-[#1a1a1a]">User</p>
-                <User className="w-5 h-5 text-[#8E8E93]" />
+                <FaUser className="w-5 h-5 text-[#8E8E93]" />
               </div>
             }
             main={
@@ -412,7 +412,7 @@ export default function DocsPage() {
             header={
               <div className="flex items-center justify-between">
                 <p className="text-sm text-dark-gray">User Wallet Balance</p>
-                <Activity className="w-5 h-5 text-green-primary" />
+                <FaChartLine className="w-5 h-5 text-green-primary" />
               </div>
             }
             footer={
@@ -422,7 +422,7 @@ export default function DocsPage() {
                 </h2>
 
                 <p className="flex items-center text-[13px] text-green-primary">
-                  <ArrowUp className="w-5 h-5" />
+                  <FaArrowUp className="w-5 h-5" />
                   <span className="">-85% </span> From last month
                 </p>
               </>

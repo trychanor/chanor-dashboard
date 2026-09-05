@@ -8,7 +8,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Monitor, Smartphone, Tablet } from "lucide-react";
+import {
+  FaDesktop,
+  FaMobileScreenButton,
+  FaTabletScreenButton,
+} from "react-icons/fa6";
 import Button from "../components/ui/Button";
 
 const MOBILE_MAX_WIDTH = 767;
@@ -20,7 +24,7 @@ type MobileAwareContextType = {
 };
 
 const MobileAwareContext = createContext<MobileAwareContextType | undefined>(
-  undefined
+  undefined,
 );
 
 function getIsMobileViewport() {
@@ -31,11 +35,7 @@ function getIsMobileViewport() {
   return window.matchMedia(MOBILE_MEDIA_QUERY).matches;
 }
 
-function MobileBlockedState({
-  onRetry,
-}: {
-  onRetry: () => void;
-}) {
+function MobileBlockedState({ onRetry }: { onRetry: () => void }) {
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#fcffe7_0%,#fff7f1_42%,#f9fafb_100%)] px-5 py-8 text-neutral-900">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-lg items-center justify-center">
@@ -44,7 +44,7 @@ function MobileBlockedState({
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/16 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]">
-                  <Smartphone size={14} />
+                  <FaMobileScreenButton size={14} />
                   Mobile blocked
                 </p>
                 <h1 className="text-3xl font-semibold leading-tight">
@@ -73,7 +73,7 @@ function MobileBlockedState({
             <div className="space-y-3">
               <div className="flex items-start gap-3 rounded-2xl bg-[#fcf4ef] p-4">
                 <div className="mt-0.5 rounded-xl bg-white p-2 text-[#e86a33] shadow-sm">
-                  <Tablet size={18} />
+                  <FaTabletScreenButton size={18} />
                 </div>
                 <div>
                   <h2 className="text-sm font-semibold text-neutral-900">
@@ -87,14 +87,15 @@ function MobileBlockedState({
 
               <div className="flex items-start gap-3 rounded-2xl bg-[#f9fafb] p-4">
                 <div className="mt-0.5 rounded-xl bg-white p-2 text-[#1a1a1a] shadow-sm">
-                  <Monitor size={18} />
+                  <FaDesktop size={18} />
                 </div>
                 <div>
                   <h2 className="text-sm font-semibold text-neutral-900">
                     Best experience
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-neutral-600">
-                    Reopen this application on a tablet, laptop, or desktop browser.
+                    Reopen this application on a tablet, laptop, or desktop
+                    browser.
                   </p>
                 </div>
               </div>
@@ -174,9 +175,7 @@ export function useMobileAware() {
   const context = useContext(MobileAwareContext);
 
   if (context === undefined) {
-    throw new Error(
-      "useMobileAware must be used within a MobileAwareProvider"
-    );
+    throw new Error("useMobileAware must be used within a MobileAwareProvider");
   }
 
   return context;

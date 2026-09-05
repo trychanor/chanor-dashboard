@@ -9,6 +9,7 @@ import {
   adminLoginEmailSchema,
   adminLoginOtpSchema,
 } from "@/utils/form-validation.util";
+import { formatDuration } from "@/utils/formatting.util";
 import Loader from "../../ui/Loader";
 
 export default function AdminLogin() {
@@ -78,12 +79,6 @@ export default function AdminLogin() {
         return prev - 1;
       });
     }, 1000);
-  }
-
-  function formatTime(seconds: number) {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   }
 
   function getFriendlyError(err: unknown): string {
@@ -459,7 +454,7 @@ export default function AdminLogin() {
                 <p className="text-center text-sm text-neutral-500">
                   Code expires in{" "}
                   <span className="font-medium text-neutral-700">
-                    {formatTime(countdown)}
+                    {formatDuration(countdown)}
                   </span>
                 </p>
               )}

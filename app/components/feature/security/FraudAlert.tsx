@@ -4,7 +4,7 @@ import { useState } from "react";
 import Table from "@/app/components/ui/Table";
 import Button from "@/app/components/ui/Button";
 import LoaderMini from "@/app/components/ui/LoaderMini";
-import { RotateCw } from "lucide-react";
+import { FaRotateRight } from "react-icons/fa6";
 import { fraudAlertData } from "@/app/mocks/security-dummy-data";
 
 type FraudAlertRow = {
@@ -41,7 +41,7 @@ export default function FraudAlert() {
           onClick={handleRefresh}
           additionalStyles="cursor-pointer text-sm p-2 gap-2"
         >
-          {isRefreshing ? <LoaderMini size={16} /> : <RotateCw size={16} />} 
+          {isRefreshing ? <LoaderMini size={16} /> : <FaRotateRight size={16} />}
         </Button>
       </div>
 

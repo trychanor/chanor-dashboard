@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, ReactNode } from "react";
-import { ChevronDown } from "lucide-react";
+import { FaChevronDown } from "react-icons/fa6";
 
 export interface DropdownOption {
   label: string;
@@ -98,7 +98,7 @@ export default function Dropdown({
                 ? options.find((o) => o.value === selectedValue)?.label
                 : placeholder}
             </span>
-            <ChevronDown
+            <FaChevronDown
               className={`w-4 h-4 transition text-dark-gray ${
                 open ? "rotate-180" : ""
               }`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 import {
   ChangeEvent,
   InputHTMLAttributes,
@@ -74,7 +74,7 @@ export default function SearchBar({
       className={`flex items-center gap-2 border border-neutral-300 rounded-lg px-3 py-2 bg-white ${className}`}
       onKeyDown={(e) => e.key === "Enter" && handleSearch()}
     >
-      <Search className="w-5 h-5 text-neutral-500" />
+      <FaMagnifyingGlass className="w-5 h-5 text-neutral-500" />
 
       <input
         type="text"
