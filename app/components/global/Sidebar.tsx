@@ -1,36 +1,40 @@
 "use client";
 
 import {
-  Home,
-  AlertTriangle,
-  Headphones,
-  Mic,
-  Users,
-  CreditCard,
-  Settings,
-  LogOut,
-} from "lucide-react";
+  FaCreditCard,
+  FaGear,
+  FaHeadphones,
+  FaHouse,
+  FaMicrophone,
+  FaRightFromBracket,
+  FaTriangleExclamation,
+  FaUsers,
+} from "react-icons/fa6";
 import SidebarLink from "../ui/SidebarLink";
 import Image from "next/image";
 import { SignOutButton } from "@clerk/nextjs";
 
 export default function Sidebar() {
   const PrimaryNavLinks = [
-    { label: "Overview", to: "/dashboard", icon: <Home /> },
-    { label: "Dispute", to: "/dashboard/dispute", icon: <AlertTriangle /> },
-    { label: "Support", to: "/dashboard/support", icon: <Headphones /> },
+    { label: "Overview", to: "/dashboard", icon: <FaHouse /> },
+    {
+      label: "Dispute",
+      to: "/dashboard/dispute",
+      icon: <FaTriangleExclamation />,
+    },
+    { label: "Support", to: "/dashboard/support", icon: <FaHeadphones /> },
     {
       label: "Voice Analytics",
       to: "/dashboard/voice-analytics",
-      icon: <Mic />,
+      icon: <FaMicrophone />,
     },
-    { label: "Field Agents", to: "/dashboard/field-agents", icon: <Users /> },
-    { label: "Card", to: "/dashboard/card", icon: <CreditCard /> },
+    { label: "Field Agents", to: "/dashboard/field-agents", icon: <FaUsers /> },
+    { label: "Card", to: "/dashboard/card", icon: <FaCreditCard /> },
   ];
 
   const SecondaryNavLinks = [
-    { label: "Settings", to: "/dashboard/settings", icon: <Settings /> },
-    // { label: "Sign Out", to: "/dashboard/setting", icon: <LogOut /> },
+    { label: "Settings", to: "/dashboard/settings", icon: <FaGear /> },
+    // { label: "Sign Out", to: "/dashboard/setting", icon: <FaRightFromBracket /> },
   ];
 
   return (
@@ -65,12 +69,11 @@ export default function Sidebar() {
             <li className="px-5 mt-16">
               <SignOutButton>
                 <button className="flex items-center gap-2.5 w-full text-[15px] text-white hover:text-white/80 transition-colors py-2.5 cursor-pointer">
-                  <LogOut size={18} />
+                  <FaRightFromBracket size={18} />
                   <span className="font-medium">Sign Out</span>
                 </button>
               </SignOutButton>
             </li>
-
           </ul>
         </div>
       </nav>

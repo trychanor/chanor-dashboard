@@ -1,4 +1,4 @@
-import { RotateCw } from "lucide-react";
+import { FaRotateRight } from "react-icons/fa6";
 import { ButtonHTMLAttributes } from "react";
 import Button from "./Button";
 
@@ -23,7 +23,7 @@ export default function RefreshButton({
       additionalStyles={`shrink-0 px-3 py-2 text-sm ${additionalStyles}`}
       {...props}
     >
-      <RotateCw size={16} />
+      <FaRotateRight size={16} />
       {label}
     </Button>
   );

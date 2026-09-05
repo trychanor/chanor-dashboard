@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import Dropdown from "./Dropdown";
 
 type PaginationProps = {
@@ -81,7 +81,7 @@ export default function Pagination({
           onClick={() => onPageChange(page - 1)}
           className="grid size-8 place-items-center rounded-md border border-neutral-300 text-neutral-600 transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <ChevronLeft size={16} />
+          <FaChevronLeft size={16} />
         </button>
 
         {pageItems.map((item, index) =>
@@ -119,7 +119,7 @@ export default function Pagination({
           onClick={() => onPageChange(page + 1)}
           className="grid size-8 place-items-center rounded-md border border-neutral-300 text-neutral-600 transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <ChevronRight size={16} />
+          <FaChevronRight size={16} />
         </button>
       </nav>
     </div>

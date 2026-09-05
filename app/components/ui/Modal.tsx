@@ -1,8 +1,8 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { FaXmark } from "react-icons/fa6";
 
 interface ModalProps {
   isOpen: boolean;
@@ -42,7 +42,7 @@ export default function Modal({
           onClick={onClose}
           className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-700"
         >
-          <X className="w-5 h-5" />
+          <FaXmark className="w-5 h-5" />
         </button>
 
         {/* Title */}
@@ -57,6 +57,6 @@ export default function Modal({
         )}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

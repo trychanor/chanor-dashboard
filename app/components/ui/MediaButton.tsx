@@ -1,6 +1,6 @@
 "use client";
 
-import { Play, Pause } from "lucide-react";
+import { FaPause, FaPlay } from "react-icons/fa6";
 import { ButtonHTMLAttributes } from "react";
 
 type MediaButtonMode = "play" | "pause";
@@ -34,9 +34,9 @@ export default function MediaButton({
       {...props}
     >
       {mode === "play" ? (
-        <Play className="w-[50%] h-[50%]" />
+        <FaPlay className="w-[50%] h-[50%]" />
       ) : (
-        <Pause className="w-[50%] h-[50%]" />
+        <FaPause className="w-[50%] h-[50%]" />
       )}
     </button>
   );

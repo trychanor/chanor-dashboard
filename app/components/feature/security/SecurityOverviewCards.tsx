@@ -1,5 +1,5 @@
 import Card from "@/app/components/ui/Card";
-import { ArrowUp, Activity } from "lucide-react";
+import { FaArrowUp, FaChartLine } from "react-icons/fa6";
 
 export default function SecurityOverviewCards() {
   return (
@@ -11,7 +11,7 @@ export default function SecurityOverviewCards() {
         header={
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-medium text-[#1a1a1a]">Failed Login</p>
-            <Activity className="size-[18px] text-red-primary" />
+            <FaChartLine className="size-[18px] text-red-primary" />
           </div>
         }
         main={
@@ -19,7 +19,7 @@ export default function SecurityOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
-            <ArrowUp className="w-4 h-4 text-red-primary" />
+            <FaArrowUp className="w-4 h-4 text-red-primary" />
             <span className="text-xs font-medium text-red-primary">+8.5%</span>
             <span className="text-xs text-[#8E8E93]">Today</span>
           </div>
@@ -33,7 +33,7 @@ export default function SecurityOverviewCards() {
         header={
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-medium text-[#1a1a1a]">Active session</p>
-            <Activity className="size-[18px] text-green-primary" />
+            <FaChartLine className="size-[18px] text-green-primary" />
           </div>
         }
         main={
@@ -41,7 +41,7 @@ export default function SecurityOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
-            <ArrowUp className="w-4 h-4 text-green-primary" />
+            <FaArrowUp className="w-4 h-4 text-green-primary" />
             <span className="text-xs font-medium text-green-primary">+8.5%</span>
             <span className="text-xs text-[#8E8E93]">Today</span>
           </div>
@@ -55,7 +55,7 @@ export default function SecurityOverviewCards() {
         header={
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-medium text-[#1a1a1a]">Locked Account</p>
-            <Activity className="size-[18px] text-green-primary" />
+            <FaChartLine className="size-[18px] text-green-primary" />
           </div>
         }
         main={
@@ -63,7 +63,7 @@ export default function SecurityOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
-            <ArrowUp className="w-4 h-4 text-green-primary" />
+            <FaArrowUp className="w-4 h-4 text-green-primary" />
             <span className="text-xs font-medium text-green-primary">+8.5%</span>
             <span className="text-xs text-[#8E8E93]">Today</span>
           </div>
@@ -77,7 +77,7 @@ export default function SecurityOverviewCards() {
         header={
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-medium text-[#1a1a1a]">Fraud Alert</p>
-            <Activity className="size-[18px] text-green-primary" />
+            <FaChartLine className="size-[18px] text-green-primary" />
           </div>
         }
         main={
@@ -85,7 +85,7 @@ export default function SecurityOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
-            <ArrowUp className="w-4 h-4 text-green-primary" />
+            <FaArrowUp className="w-4 h-4 text-green-primary" />
             <span className="text-xs font-medium text-green-primary">+8.5%</span>
             <span className="text-xs text-[#8E8E93]">Today</span>
           </div>

@@ -1,6 +1,6 @@
 import Card from "@/app/components/ui/Card";
 import ZigZagIcon from "@/app/components/ui/zigzagIcon";
-import { ArrowUp } from "lucide-react";
+import { FaArrowUp } from "react-icons/fa6";
 
 export default function DisputeCard() {
   return (
@@ -24,7 +24,7 @@ export default function DisputeCard() {
           }
           footer={
             <div className="flex">
-              <ArrowUp className="w-4 h-4 text-[#F53D3D]" />
+              <FaArrowUp className="w-4 h-4 text-[#F53D3D]" />
               <p className="">
                 <span className="text-xs font-semibold leading-[100%]">
                   +8.5%
@@ -54,7 +54,7 @@ export default function DisputeCard() {
           }
           footer={
             <div className="flex">
-              <ArrowUp className="w-4 h-4 text-[#22C55E]" />
+              <FaArrowUp className="w-4 h-4 text-[#22C55E]" />
               <p className="">
                 <span className="text-xs font-semibold leading-[100%]">
                   +8.5%
@@ -84,7 +84,7 @@ export default function DisputeCard() {
           }
           footer={
             <div className="flex">
-              <ArrowUp className="w-4 h-4 text-[#22C55E]" />
+              <FaArrowUp className="w-4 h-4 text-[#22C55E]" />
               <p className="">
                 <span className="text-xs font-semibold leading-[100%]">
                   +8.5%
@@ -114,7 +114,7 @@ export default function DisputeCard() {
           }
           footer={
             <div className="flex">
-              <ArrowUp className="w-4 h-4 text-[#22C55E]" />
+              <FaArrowUp className="w-4 h-4 text-[#22C55E]" />
               <p className="">
                 <span className="text-xs font-semibold leading-[100%]">
                   +8.5%

@@ -26,6 +26,7 @@ lib/
   hooks/                    TanStack Query hooks
   models/                   API response-to-view-model mapping
 types/                      Shared API contracts
+utils/                      Pure shared formatting and validation helpers
 ```
 
 `app/layout.tsx` installs the global providers. The dashboard route layout adds
@@ -59,7 +60,7 @@ Use these conventions:
 - Use Tailwind classes and the colour tokens in `app/globals.css`.
 - Use `raba-orange` for primary commands. Use neutral borders and surfaces for
   operational dashboard content.
-- Use Lucide icons for familiar actions.
+- Use React icons for familiar actions.
 - Keep sections as unframed layouts. Use cards for repeated or truly bounded
   information only.
 - Keep responsive constraints on tables, grids, and controls.
@@ -81,6 +82,21 @@ Use the loading state that matches the operation:
 The User View and customer details screens implement this pattern. Their
 Refresh buttons call TanStack Query `refetch()` and show skeletons without a
 Next.js route refresh.
+
+## Utilities
+
+Put pure, framework-independent helpers in `utils/`. Name the file by its
+purpose, such as `formatting.util.ts` or `form-validation.util.ts`.
+
+Use utilities for shared formatting, parsing, validation, and data conversion
+that does not need React, browser APIs, authentication, or request state.
+
+- Reuse or introduce utilities as the application grows. Add a page-local
+  formatting helper only when its use is likely to remain deterministic to
+  that page alone.
+- Keep utility functions deterministic and easy to test.
+- Use `formatting.util.ts` for dates, times, durations, currency, status labels etc.
+- Keep API response mapping in `lib/models/`, not in `utils/`.
 
 ## Authentication And Access Control
 

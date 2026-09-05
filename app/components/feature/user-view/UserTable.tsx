@@ -8,6 +8,7 @@ import Table from "@/app/components/ui/Table";
 import TableSkeleton from "@/app/components/ui/TableSkeleton";
 import { CustomerSummary } from "@/lib/models/customer.model";
 import { ApiResponseWithPagination } from "@/types";
+import { formatDate } from "@/utils/formatting.util";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 
@@ -32,16 +33,6 @@ type UserTableProps = {
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
 };
-
-function formatDate(value: string | null, includeTime = false) {
-  if (!value) return "Not available";
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) return "Not available";
-
-  return includeTime ? date.toLocaleString() : date.toLocaleDateString();
-}
 
 export default function UserTable({
   pageSize,
@@ -73,7 +64,7 @@ export default function UserTable({
         name: customer.name,
         email: customer.email,
         joinedDate: formatDate(customer.dateRegistered),
-        lastActive: formatDate(customer.lastActive, true),
+        lastActive: formatDate(customer.lastActive, { includeTime: true }),
         accountStatus: (
           <Status
             label={customer.accountStatus ?? "Not available"}

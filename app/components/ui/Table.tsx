@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { FaEllipsis, FaEye, FaPen, FaTrash } from "react-icons/fa6";
 
 interface TableColumn<TData> {
   key: keyof TData;
@@ -62,10 +62,7 @@ export default function Table<TData extends Record<string, unknown>>({
     function closeMenu(event: MouseEvent) {
       const target = event.target as Node;
 
-      if (
-        !menuRef.current?.contains(target) &&
-        !trigger.contains(target)
-      ) {
+      if (!menuRef.current?.contains(target) && !trigger.contains(target)) {
         setOpenRowId(null);
         setActionMenu(null);
       }
@@ -135,7 +132,9 @@ export default function Table<TData extends Record<string, unknown>>({
                   key={String(col.key)}
                   className={`${cellClassName} ${col.className || ""}`}
                 >
-                  {col.render ? col.render(row.data) : (row.data[col.key] as ReactNode)}
+                  {col.render
+                    ? col.render(row.data)
+                    : (row.data[col.key] as ReactNode)}
                 </td>
               ))}
               {showRowActions && (
@@ -152,7 +151,7 @@ export default function Table<TData extends Record<string, unknown>>({
                         toggleActionMenu(row.id, event.currentTarget)
                       }
                     >
-                      <MoreHorizontal size={16} />
+                      <FaEllipsis size={16} />
                     </button>
                   </div>
                 </td>
@@ -193,13 +192,13 @@ export default function Table<TData extends Record<string, unknown>>({
               >
                 {menu.icon}
                 {menu.label.toLowerCase() === "see details" && !menu.icon && (
-                  <Eye className="size-4" />
+                  <FaEye className="size-4" />
                 )}
                 {menu.label.toLowerCase() === "edit" && !menu.icon && (
-                  <Pencil className="size-4" />
+                  <FaPen className="size-4" />
                 )}
                 {menu.label.toLowerCase() === "delete" && !menu.icon && (
-                  <Trash2 className="size-4" />
+                  <FaTrash className="size-4" />
                 )}
                 {menu.label}
               </button>

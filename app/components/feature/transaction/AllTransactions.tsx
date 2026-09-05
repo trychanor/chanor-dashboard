@@ -4,7 +4,12 @@ import Dropdown from "@/app/components/ui/Dropdown";
 import SearchBar from "@/app/components/ui/SearchBar";
 import Status from "@/app/components/ui/Status";
 import Table from "@/app/components/ui/Table";
-import { ArrowLeft, ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
+import {
+  FaArrowLeft,
+  FaChevronLeft,
+  FaChevronRight,
+  FaRotateRight,
+} from "react-icons/fa6";
 
 type TransactionRow = {
   ticketId: string;
@@ -145,7 +150,7 @@ export default function AllTransactions() {
   return (
     <div>
       <Button variant="text" onClick={() => setShowAllTransactions(false)}>
-        <ArrowLeft /> Go Back
+        <FaArrowLeft /> Go Back
       </Button>
       <div className="flex items-center gap-4">
         <SearchBar
@@ -165,7 +170,7 @@ export default function AllTransactions() {
             ]}
           />
           <Button variant="text">
-            <RotateCw /> Refresh
+            <FaRotateRight /> Refresh
           </Button>
         </div>
       </div>
@@ -177,7 +182,7 @@ export default function AllTransactions() {
           </p>
           <div className="flex items-center gap-2">
             <Button variant="outline" additionalStyles="cursor-not-allowed">
-              <ChevronLeft />
+              <FaChevronLeft />
               Previous
             </Button>
             <h3 className="flex justify-center items-center text-white bg-neutral-black py-2.5 px-5 h-full rounded-[5px]">
@@ -185,7 +190,7 @@ export default function AllTransactions() {
             </h3>
             <Button variant="outline">
               Next
-              <ChevronRight />
+              <FaChevronRight />
             </Button>
           </div>
         </div>
