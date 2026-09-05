@@ -1,11 +1,15 @@
 "use client";
+
+import Button from "@/app/components/ui/Button";
+import EmptyState from "@/app/components/ui/EmptyState";
+import Pagination from "@/app/components/ui/Pagination";
 import Status from "@/app/components/ui/Status";
 import Table from "@/app/components/ui/Table";
+import TableSkeleton from "@/app/components/ui/TableSkeleton";
+import { CustomerSummary } from "@/lib/models/customer.model";
+import { ApiResponseWithPagination } from "@/types";
 import { useRouter } from "next/navigation";
-import { useCustomers } from "@/lib/hooks/use-customers";
 import Loading from "@/app/loading";
-import { Customer as ApiCustomer } from "@/types";
-import Button from "@/app/components/ui/Button";
 
 type UserTableRow = {
   userId: string;
@@ -16,9 +20,41 @@ type UserTableRow = {
   accountStatus: React.ReactNode;
 };
 
-export default function UserTable() {
-  const { data: customersData, isLoading, isError, refetch } = useCustomers({ page: 1, limit: 5, search: "" }) // params used here are for test purposes. Don't hardcode
+type UserTableProps = {
+  pageSize: number;
+  search: string;
+  customersData?: ApiResponseWithPagination<CustomerSummary[]>;
+  isLoading: boolean;
+  isFetching: boolean;
+  isManualRefresh: boolean;
+  isError: boolean;
+  onRetry: () => void;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+};
 
+function formatDate(value: string | null, includeTime = false) {
+  if (!value) return "Not available";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) return "Not available";
+
+  return includeTime ? date.toLocaleString() : date.toLocaleDateString();
+}
+
+export default function UserTable({
+  pageSize,
+  search,
+  customersData,
+  isLoading,
+  isFetching,
+  isManualRefresh,
+  isError,
+  onRetry,
+  onPageChange,
+  onPageSizeChange,
+}: UserTableProps) {
   const router = useRouter();
   const columns: Array<{ key: keyof UserTableRow; label: string }> = [
     { key: "userId", label: "User ID" },
@@ -30,46 +66,81 @@ export default function UserTable() {
   ];
 
   const rows =
-    customersData?.data?.map((customer: ApiCustomer) => ({
+    customersData?.data.map((customer) => ({
       id: customer.userId,
       data: {
         userId: customer.userId,
         name: customer.name,
         email: customer.email,
-        joinedDate: new Date(customer.dateRegistered).toLocaleDateString(),
-        lastActive: new Date(customer.lastActive).toLocaleString(),
+        joinedDate: formatDate(customer.dateRegistered),
+        lastActive: formatDate(customer.lastActive, true),
         accountStatus: (
           <Status
-            label={customer.accountStatus}
+            label={customer.accountStatus ?? "Not available"}
             appearance="subtle"
             showDot={true}
           />
         ),
       },
-    })) || [];
-
-  const viewUser = (id: string) => {
-    router.push(`/dashboard/${id}`);
-  };
+    })) ?? [];
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full min-h-[300px]">
+      <div className="flex min-h-[300px] items-center justify-center">
         <Loading />
+      </div>
+    );
+  }
+
+  if (isManualRefresh) {
+    const loadingRowCount = customersData?.data.length || pageSize;
+
+    return (
+      <div>
+        <TableSkeleton columnCount={7} rowCount={loadingRowCount} />
+        {customersData && (
+          <Pagination
+            page={customersData.metadata.page}
+            totalPages={customersData.metadata.totalPages}
+            totalRecords={customersData.metadata.totalRecords}
+            pageSize={customersData.metadata.limit ?? pageSize}
+            pageSizeOptions={[10, 25, 50, 100]}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+            isLoading={true}
+          />
+        )}
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center h-full min-h-[300px] gap-4">
+      <div className="flex min-h-[300px] flex-col items-center justify-center gap-4">
         <p className="text-sm text-neutral-600">
           Customer data is temporarily unavailable.
         </p>
-        <Button onClick={() => refetch()}>Retry</Button>
+        <Button onClick={onRetry}>Retry</Button>
       </div>
     );
   }
+
+  if (!customersData || customersData.data.length === 0) {
+    return (
+      <EmptyState
+        title={search ? "No matching users found" : "No users found"}
+        description={
+          search
+            ? "Try a different name or email address."
+            : "Users will appear here when they are available."
+        }
+        className="min-h-[300px]"
+      />
+    );
+  }
+
+  const responsePageSize = customersData.metadata.limit ?? pageSize;
+
   return (
     <div>
       <Table
@@ -79,16 +150,19 @@ export default function UserTable() {
         menus={[
           {
             label: "See Details",
-            onClick: (row) => viewUser(row.userId),
+            onClick: (row) => router.push(`/dashboard/${row.userId}`),
           },
-
-          // We don't currently support deleting or editing users from the admin dashboard
-          // {
-          //   onClick: (row) => console.log("Edit", row),
-          //   label: "Edit",
-          // },
-          // { label: "Delete" },
         ]}
+      />
+      <Pagination
+        page={customersData.metadata.page}
+        totalPages={customersData.metadata.totalPages}
+        totalRecords={customersData.metadata.totalRecords}
+        pageSize={responsePageSize}
+        pageSizeOptions={[10, 25, 50, 100]}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+        isLoading={isFetching}
       />
     </div>
   );

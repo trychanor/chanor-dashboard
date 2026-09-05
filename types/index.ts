@@ -2,6 +2,7 @@ export type PaginationMetadata = {
   page: number;
   totalPages: number;
   totalRecords: number;
+  limit?: number;
 };
 
 export type ApiResponse<T> = {

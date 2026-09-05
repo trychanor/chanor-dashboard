@@ -1,7 +1,13 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import {
+  ChangeEvent,
+  InputHTMLAttributes,
+  FocusEvent,
+  useEffect,
+  useState,
+} from "react";
 
 interface SearchBarProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -10,6 +16,8 @@ interface SearchBarProps extends Omit<
   value?: string;
   onChange?: (value: string) => void;
   onSearch?: (value: string) => void;
+  onDebouncedChange?: (value: string) => void;
+  debounceMs?: number;
   placeholder?: string;
   className?: string;
 }
@@ -18,8 +26,11 @@ export default function SearchBar({
   value,
   onChange,
   onSearch,
+  onDebouncedChange,
+  debounceMs = 500,
   placeholder = "Search...",
   className = "",
+  onFocus,
   ...props
 }: SearchBarProps) {
   const [internalValue, setInternalValue] = useState("");
@@ -41,6 +52,23 @@ export default function SearchBar({
     onSearch?.(text);
   };
 
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    onFocus?.(event);
+    setFocusVersion((currentVersion) => currentVersion + 1);
+  };
+
+  const [focusVersion, setFocusVersion] = useState(0);
+
+  useEffect(() => {
+    if (!onDebouncedChange) return;
+
+    const timer = window.setTimeout(() => {
+      onDebouncedChange(text);
+    }, debounceMs);
+
+    return () => window.clearTimeout(timer);
+  }, [debounceMs, focusVersion, onDebouncedChange, text]);
+
   return (
     <div
       className={`flex items-center gap-2 border border-neutral-300 rounded-lg px-3 py-2 bg-white ${className}`}
@@ -50,6 +78,7 @@ export default function SearchBar({
 
       <input
         type="text"
+        onFocus={handleFocus}
         value={text}
         onChange={handleChange}
         placeholder={placeholder}

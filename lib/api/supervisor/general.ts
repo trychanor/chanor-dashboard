@@ -4,7 +4,7 @@ import {
   ApiResponse,
   Settlement,
 } from "@/types";
-import { safeApiCall, api } from "../clients";
+import { safeApiCall, api } from "../http-client";
 
 export type GetNotificationsProps = {
   page: number;

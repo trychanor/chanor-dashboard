@@ -1,30 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import { RotateCw } from "lucide-react";
-import Button from "@/app/components/ui/Button";
+import RefreshButton from "@/app/components/ui/RefreshButton";
 import SearchBar from "@/app/components/ui/SearchBar";
 
-export default function UserAction() {
-  const [query, setQuery] = useState("");
+type UserActionProps = {
+  query: string;
+  onQueryChange: (value: string) => void;
+  onDebouncedSearch: (value: string) => void;
+  onRefresh: () => void;
+};
 
-  const handleSearch = (value: string) => {
-    console.log("Searching for:", value);
-    // API call, filter table, etc.
-  };
-
+export default function UserAction({
+  query,
+  onQueryChange,
+  onDebouncedSearch,
+  onRefresh,
+}: UserActionProps) {
   return (
-    <div className="flex justify-between items-center gap-4 px-4 py-3">
+    <div className="flex items-center justify-between gap-4 px-4 py-3">
       <SearchBar
         value={query}
-        onChange={setQuery}
-        onSearch={handleSearch}
+        onChange={onQueryChange}
+        onDebouncedChange={onDebouncedSearch}
         placeholder="Search users"
         className="max-w-[560px] flex-1 py-1.5"
+        type="search"
+        aria-label="Search users"
       />
-      <Button variant="text" additionalStyles="cursor-pointer text-sm p-2">
-        <RotateCw size={16} /> Refresh
-      </Button>
+      <RefreshButton
+        onClick={onRefresh}
+        title="Refresh user directory"
+      />
     </div>
   );
 }
