@@ -83,7 +83,7 @@ export default function UserTable({
     );
   }
 
-  if (isManualRefresh) {
+  if (isManualRefresh || (isFetching && Boolean(search))) {
     const loadingRowCount = customersData?.data.length || pageSize;
 
     return (
