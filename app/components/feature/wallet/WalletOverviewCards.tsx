@@ -24,25 +24,28 @@ export default function WalletOverviewCards() {
     return isNaN(num) ? "—" : `₦${num.toLocaleString()}`;
   };
 
+  // Cast to any because the real API shape is not fully typed yet
+  const data = balanceData as any;
+
   const userBalance =
-    balanceData?.data?.userWalletBalance ??
-    balanceData?.data?.userBalance ??
-    balanceData?.data?.users ??
-    balanceData?.userWalletBalance ??
+    data?.data?.userWalletBalance ??
+    data?.data?.userBalance ??
+    data?.data?.users ??
+    data?.userWalletBalance ??
     "—";
 
   const merchantBalance =
-    balanceData?.data?.merchantWalletBalance ??
-    balanceData?.data?.merchantBalance ??
-    balanceData?.data?.merchants ??
-    balanceData?.merchantWalletBalance ??
+    data?.data?.merchantWalletBalance ??
+    data?.data?.merchantBalance ??
+    data?.data?.merchants ??
+    data?.merchantWalletBalance ??
     "—";
 
   const settlementBalance =
-    balanceData?.data?.settlementBalance ??
-    balanceData?.data?.providus ??
-    balanceData?.data?.settlement ??
-    balanceData?.settlementBalance ??
+    data?.data?.settlementBalance ??
+    data?.data?.providus ??
+    data?.data?.settlement ??
+    data?.settlementBalance ??
     "—";
 
   return (

@@ -10,7 +10,7 @@ import {
   getUsersAction,
   getActivitySourceAction,
 } from "../actions/analytics";
-import { GetTransactionsAnalyticsProps } from "../api/supervisor/transaction-analytics";
+import { GetTransactionsAnalyticsProps } from '@/lib/api/supervisor/transactions-analytics'
 import { GetUsersActivityProps } from "../api/supervisor/users-activity";
 import { ApiResult } from "@/types";
 
