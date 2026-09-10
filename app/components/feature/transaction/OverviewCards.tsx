@@ -40,10 +40,11 @@ export default function OverviewCards() {
     );
   }
 
-  const usersData = usersQuery.data;
-  const volumeData = volumeQuery.data;
-  const profitData = profitQuery.data;
-  const balanceData = balanceQuery.data;
+  // Cast to any for now so TypeScript stops complaining about unknown API shapes
+  const usersData = usersQuery.data as any;
+  const volumeData = volumeQuery.data as any;
+  const profitData = profitQuery.data as any;
+  const balanceData = balanceQuery.data as any;
 
   const formatNumber = (value: any) => {
     if (value === undefined || value === null) return "—";

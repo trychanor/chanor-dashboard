@@ -42,7 +42,7 @@ export default function AllTransactions() {
   });
 
   const transactions = data?.data || [];
-  const meta = data?.metadata;
+  const meta = data?.metadata as any; // temporary safe cast
 
   const columns: Array<{ key: keyof TransactionRow; label: string }> = [
     { key: "ticketId", label: "Ticket ID" },
@@ -87,7 +87,7 @@ export default function AllTransactions() {
   });
 
   const totalPages = meta?.totalPages || 1;
-  const totalItems = meta?.total || transactions.length;
+  const totalItems = meta?.totalRecords || meta?.total || transactions.length;
 
   return (
     <div className="space-y-4">
