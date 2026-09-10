@@ -4,7 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { useSignIn, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { HiArrowLeft } from "react-icons/hi2";
-import { adminLoginEmailSchema, adminLoginOtpSchema } from "@/utils/form-validation.util";
+import { checkDashboardOrganizationAccess } from "@/lib/actions/auth";
+import {
+  adminLoginEmailSchema,
+  adminLoginOtpSchema,
+} from "@/utils/form-validation.util";
+import { formatDuration } from "@/utils/formatting.util";
 import Loader from "../../ui/Loader";
 
 export default function AdminLogin() {
@@ -76,12 +81,6 @@ export default function AdminLogin() {
     }, 1000);
   }
 
-  function formatTime(seconds: number) {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  }
-
   function getFriendlyError(err: unknown): string {
     const clerkError = err as {
       errors?: { code?: string; longMessage?: string; message?: string }[];
@@ -89,7 +88,11 @@ export default function AdminLogin() {
 
     const firstError = clerkError?.errors?.[0];
     const code = firstError?.code || "";
-    const message = (firstError?.longMessage || firstError?.message || "").toLowerCase();
+    const message = (
+      firstError?.longMessage ||
+      firstError?.message ||
+      ""
+    ).toLowerCase();
 
     if (
       code.includes("not_allowed") ||
@@ -105,7 +108,9 @@ export default function AdminLogin() {
     return (
       firstError?.longMessage ||
       firstError?.message ||
-      (err instanceof Error ? err.message : "Something went wrong. Please try again.")
+      (err instanceof Error
+        ? err.message
+        : "Something went wrong. Please try again.")
     );
   }
 
@@ -119,12 +124,19 @@ export default function AdminLogin() {
     setError("");
 
     try {
+      const access = await checkDashboardOrganizationAccess(email);
+
+      if (!access.allowed) {
+        setError("You don't have access to this application.");
+        return;
+      }
+
       const signInAttempt = await signIn.create({
         identifier: email.trim(),
       });
 
       const emailFactor = signInAttempt.supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
+        (factor) => factor.strategy === "email_code",
       );
 
       if (
@@ -218,7 +230,17 @@ export default function AdminLogin() {
           throw new Error("Sign-in completed but no session was created.");
         }
 
-        await setActive({ session: result.createdSessionId });
+        const access = await checkDashboardOrganizationAccess(email);
+
+        if (!access.allowed || !access.organizationId) {
+          setError("You don't have access to this application.");
+          return;
+        }
+
+        await setActive({
+          session: result.createdSessionId,
+          organization: access.organizationId,
+        });
         router.replace("/dashboard");
       } else {
         setError("Verification was not completed. Please try again.");
@@ -291,7 +313,7 @@ export default function AdminLogin() {
             backgroundColor: "#ea580c",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-600/85 to-orange-900/90" />
+        <div className="absolute inset-0 bg-linear-to-br from-orange-600/85 to-orange-900/90" />
 
         <div className="relative z-10 flex h-full flex-col justify-between p-12 text-white">
           <div>
@@ -432,7 +454,7 @@ export default function AdminLogin() {
                 <p className="text-center text-sm text-neutral-500">
                   Code expires in{" "}
                   <span className="font-medium text-neutral-700">
-                    {formatTime(countdown)}
+                    {formatDuration(countdown)}
                   </span>
                 </p>
               )}

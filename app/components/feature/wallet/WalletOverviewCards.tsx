@@ -1,9 +1,13 @@
 "use client";
 
 import Card from "@/app/components/ui/Card";
+<<<<<<< HEAD
 import { ArrowUp, Activity } from "lucide-react";
 import { useBalance } from "@/lib/hooks/use-analytics";
 import Loading from "@/app/loading";
+=======
+import { FaArrowUp, FaChartLine } from "react-icons/fa6";
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
 
 export default function WalletOverviewCards() {
   const period = 7;
@@ -59,7 +63,7 @@ export default function WalletOverviewCards() {
             <p className="text-[13px] font-medium text-[#1a1a1a]">
               User Wallet Balance
             </p>
-            <Activity className="size-[18px] text-green-primary" />
+            <FaChartLine className="size-[18px] text-green-primary" />
           </div>
         }
         main={
@@ -69,8 +73,15 @@ export default function WalletOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
+<<<<<<< HEAD
             <ArrowUp className="w-4 h-4 text-green-primary" />
             <span className="text-xs font-medium text-green-primary">—</span>
+=======
+            <FaArrowUp className="w-4 h-4 text-green-primary" />
+            <span className="text-xs font-medium text-green-primary">
+              +8.5%
+            </span>
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
             <span className="text-xs text-[#8E8E93]">from last month</span>
           </div>
         }
@@ -85,7 +96,7 @@ export default function WalletOverviewCards() {
             <p className="text-[13px] font-medium text-[#1a1a1a]">
               Merchant Wallet Total
             </p>
-            <Activity className="size-[18px] text-green-primary" />
+            <FaChartLine className="size-[18px] text-green-primary" />
           </div>
         }
         main={
@@ -95,8 +106,15 @@ export default function WalletOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
+<<<<<<< HEAD
             <ArrowUp className="w-4 h-4 text-green-primary" />
             <span className="text-xs font-medium text-green-primary">—</span>
+=======
+            <FaArrowUp className="w-4 h-4 text-green-primary" />
+            <span className="text-xs font-medium text-green-primary">
+              +8.5%
+            </span>
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
             <span className="text-xs text-[#8E8E93]">from last month</span>
           </div>
         }
@@ -111,7 +129,7 @@ export default function WalletOverviewCards() {
             <p className="text-[13px] font-medium text-[#1a1a1a]">
               Providus Settlement Account
             </p>
-            <Activity className="size-[18px] text-green-primary" />
+            <FaChartLine className="size-[18px] text-green-primary" />
           </div>
         }
         main={
@@ -124,8 +142,15 @@ export default function WalletOverviewCards() {
         }
         footer={
           <div className="flex items-center gap-1">
+<<<<<<< HEAD
             <ArrowUp className="w-4 h-4 text-green-primary" />
             <span className="text-xs font-medium text-green-primary">—</span>
+=======
+            <FaArrowUp className="w-4 h-4 text-green-primary" />
+            <span className="text-xs font-medium text-green-primary">
+              +8.5%
+            </span>
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
             <span className="text-xs text-[#8E8E93]">from last month</span>
           </div>
         }

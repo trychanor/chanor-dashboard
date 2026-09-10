@@ -1,6 +1,5 @@
 import Table from "@/app/components/ui/Table";
-import { CalendarDays } from "lucide-react";
-import { RotateCw } from "lucide-react";
+import { FaCalendarDays, FaRotateRight } from "react-icons/fa6";
 import Status from "../../ui/Status";
 
 type SupportTableRow = {
@@ -58,14 +57,14 @@ export default function SupportTable() {
       {/* calendar and date */}
       <div className="flex justify-end items-center gap-5 p-4">
         <div className="flex justify-center h-9 px-2.5 rounded-md items-center gap-3 border border-[#C7C7CC] text-[#667085]">
-          <CalendarDays size={18} />
+          <FaCalendarDays size={18} />
           <h2 className="text-xs md:text-[13px] font-medium leading-[100%]">
             May 6, 2025 - 11:32 AM
           </h2>
         </div>
         {/* refresh */}
         <div className="flex gap-2.5 text-[#0070FF] items-center">
-          <RotateCw size={18} />
+          <FaRotateRight size={18} />
           <h3 className="text-[13px] font-medium leading-[100%]">Refresh </h3>
         </div>
       </div>

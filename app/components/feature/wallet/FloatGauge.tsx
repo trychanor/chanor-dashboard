@@ -4,7 +4,7 @@ import { useState } from "react";
 import Button from "@/app/components/ui/Button";
 import Table from "@/app/components/ui/Table";
 import LoaderMini from "@/app/components/ui/LoaderMini";
-import { RotateCw } from "lucide-react";
+import { FaRotateRight } from "react-icons/fa6";
 import {
   floatGaugeUsersData,
   floatGaugeAlertsData,
@@ -86,7 +86,7 @@ export default function FloatGauge() {
                 onClick={handleRefresh}
                 additionalStyles="cursor-pointer text-sm p-2 gap-2"
               >
-                <RotateCw size={16} />
+                <FaRotateRight size={16} />
               </Button>
             </div>
             <Table

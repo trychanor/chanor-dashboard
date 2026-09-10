@@ -8,8 +8,17 @@ import Dropdown from "@/app/components/ui/Dropdown";
 import SearchBar from "@/app/components/ui/SearchBar";
 import Status from "@/app/components/ui/Status";
 import Table from "@/app/components/ui/Table";
+<<<<<<< HEAD
 import Loading from "@/app/loading";
 import { ArrowLeft, ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
+=======
+import {
+  FaArrowLeft,
+  FaChevronLeft,
+  FaChevronRight,
+  FaRotateRight,
+} from "react-icons/fa6";
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
 
 type TransactionRow = {
   ticketId: string;
@@ -89,8 +98,12 @@ export default function AllTransactions() {
     <div className="space-y-4">
       {/* Back button */}
       <Button variant="text" onClick={() => setShowAllTransactions(false)}>
+<<<<<<< HEAD
         <ArrowLeft size={16} className="mr-1" />
         Go Back
+=======
+        <FaArrowLeft /> Go Back
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
       </Button>
 
       {/* Search + Filters */}
@@ -121,6 +134,7 @@ export default function AllTransactions() {
               setPage(1);
             }}
           />
+<<<<<<< HEAD
 
           <Button
             variant="text"
@@ -140,6 +154,32 @@ export default function AllTransactions() {
       {isLoading ? (
         <div className="flex justify-center items-center min-h-[300px]">
           <Loading />
+=======
+          <Button variant="text">
+            <FaRotateRight /> Refresh
+          </Button>
+        </div>
+      </div>
+      <div>
+        <Table columns={columns} rows={rows} />
+        <div className="flex justify-between items-center mt-8">
+          <p className="text-sm leading-[18px] text-[#797979]">
+            Showing 1 to 10 of 10 transactions
+          </p>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" additionalStyles="cursor-not-allowed">
+              <FaChevronLeft />
+              Previous
+            </Button>
+            <h3 className="flex justify-center items-center text-white bg-neutral-black py-2.5 px-5 h-full rounded-[5px]">
+              1
+            </h3>
+            <Button variant="outline">
+              Next
+              <FaChevronRight />
+            </Button>
+          </div>
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
         </div>
       ) : isError ? (
         <div className="flex flex-col items-center justify-center min-h-[300px] gap-3">

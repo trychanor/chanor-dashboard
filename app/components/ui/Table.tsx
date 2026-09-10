@@ -1,7 +1,8 @@
 "use client";
 
-import { ReactNode, useState, useRef } from "react";
-import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { FaEllipsis, FaEye, FaPen, FaTrash } from "react-icons/fa6";
 
 interface TableColumn<TData> {
   key: keyof TData;
@@ -46,17 +47,66 @@ export default function Table<TData extends Record<string, unknown>>({
 }: TableProps<TData>) {
   const [openRowId, setOpenRowId] = useState<number | string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [actionMenu, setActionMenu] = useState<{
+    top: number;
+    left: number;
+    opensUpward: boolean;
+    trigger: HTMLButtonElement;
+  } | null>(null);
 
-  // Close menu on outside click
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-  //       setOpenRowId(null);
-  //     }
-  //   }
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
+  useEffect(() => {
+    if (!actionMenu) return;
+
+    const trigger = actionMenu.trigger;
+
+    function closeMenu(event: MouseEvent) {
+      const target = event.target as Node;
+
+      if (!menuRef.current?.contains(target) && !trigger.contains(target)) {
+        setOpenRowId(null);
+        setActionMenu(null);
+      }
+    }
+
+    function closeMenuForViewportChange() {
+      setOpenRowId(null);
+      setActionMenu(null);
+    }
+
+    document.addEventListener("mousedown", closeMenu);
+    window.addEventListener("resize", closeMenuForViewportChange);
+    window.addEventListener("scroll", closeMenuForViewportChange, true);
+
+    return () => {
+      document.removeEventListener("mousedown", closeMenu);
+      window.removeEventListener("resize", closeMenuForViewportChange);
+      window.removeEventListener("scroll", closeMenuForViewportChange, true);
+    };
+  }, [actionMenu]);
+
+  function toggleActionMenu(
+    rowId: string | number,
+    trigger: HTMLButtonElement,
+  ) {
+    if (openRowId === rowId) {
+      setOpenRowId(null);
+      setActionMenu(null);
+      return;
+    }
+
+    const triggerRect = trigger.getBoundingClientRect();
+    const estimatedMenuHeight = (menus?.length ?? 1) * 40 + 16;
+    const opensUpward =
+      triggerRect.bottom + estimatedMenuHeight > window.innerHeight;
+
+    setOpenRowId(rowId);
+    setActionMenu({
+      top: opensUpward ? triggerRect.top - 8 : triggerRect.bottom + 8,
+      left: triggerRect.right,
+      opensUpward,
+      trigger,
+    });
+  }
 
   return (
     <div className={`overflow-x-auto ${className}`}>
@@ -82,45 +132,27 @@ export default function Table<TData extends Record<string, unknown>>({
                   key={String(col.key)}
                   className={`${cellClassName} ${col.className || ""}`}
                 >
-                  {col.render ? col.render(row.data) : (row.data[col.key] as ReactNode)}
+                  {col.render
+                    ? col.render(row.data)
+                    : (row.data[col.key] as ReactNode)}
                 </td>
               ))}
               {showRowActions && (
                 <td className={cellClassName}>
-                  <div className="relative" ref={menuRef}>
+                  <div className="flex justify-end">
                     <button
-                      className="p-1 hover:bg-neutral-100 rounded-full cursor-pointer"
-                      onClick={() =>
-                        setOpenRowId(openRowId === row.id ? null : row.id)
+                      type="button"
+                      aria-label={`Actions for row ${row.id}`}
+                      aria-expanded={openRowId === row.id}
+                      aria-haspopup="menu"
+                      title="Actions"
+                      className="rounded-full p-1 text-neutral-600 transition hover:bg-neutral-100 hover:text-neutral-900"
+                      onClick={(event) =>
+                        toggleActionMenu(row.id, event.currentTarget)
                       }
                     >
-                      <MoreHorizontal size={16} />
+                      <FaEllipsis size={16} />
                     </button>
-
-                    {menus && openRowId === row.id && (
-                      <div className="absolute right-20 mt-2 w-40 bg-white rounded shadow-lg z-10">
-                        {menus.map((menu) => (
-                          <button
-                            key={menu.label}
-                            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm hover:bg-neutral-100 cursor-pointer"
-                            onClick={() => {
-                              if (menu.onClick) menu.onClick(row.data);
-                              setOpenRowId(null);
-                            }}
-                          >
-                            {menu?.icon}
-                            {menu.label.toLowerCase() === "see details" &&
-                              !menu.icon && <Eye className="w-4 h-4" />}
-                            {menu.label.toLowerCase() === "edit" &&
-                              !menu.icon && <Pencil className="w-4 h-4" />}
-                            {menu.label.toLowerCase() === "delete" &&
-                              !menu.icon && <Trash2 className="w-4 h-4" />}
-
-                            {menu.label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </td>
               )}
@@ -128,6 +160,52 @@ export default function Table<TData extends Record<string, unknown>>({
           ))}
         </tbody>
       </table>
+      {actionMenu &&
+        menus &&
+        createPortal(
+          <div
+            ref={menuRef}
+            role="menu"
+            className="fixed z-50 w-40 rounded-md border border-neutral-200 bg-white py-1 shadow-lg"
+            style={{
+              top: actionMenu.top,
+              left: actionMenu.left,
+              transform: actionMenu.opensUpward
+                ? "translate(-100%, -100%)"
+                : "translateX(-100%)",
+            }}
+          >
+            {menus.map((menu) => (
+              <button
+                key={menu.label}
+                type="button"
+                role="menuitem"
+                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-neutral-700 transition hover:bg-neutral-100"
+                onClick={() => {
+                  const row = rows.find((item) => item.id === openRowId);
+
+                  if (row) menu.onClick?.(row.data);
+
+                  setOpenRowId(null);
+                  setActionMenu(null);
+                }}
+              >
+                {menu.icon}
+                {menu.label.toLowerCase() === "see details" && !menu.icon && (
+                  <FaEye className="size-4" />
+                )}
+                {menu.label.toLowerCase() === "edit" && !menu.icon && (
+                  <FaPen className="size-4" />
+                )}
+                {menu.label.toLowerCase() === "delete" && !menu.icon && (
+                  <FaTrash className="size-4" />
+                )}
+                {menu.label}
+              </button>
+            ))}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

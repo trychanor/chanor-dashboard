@@ -2,8 +2,13 @@
 
 import Button from "@/app/components/ui/Button";
 import Status from "@/app/components/ui/Status";
+<<<<<<< HEAD
 import StatusDot from "@/app/components/ui/StatusDot";
 import { MoveRight } from "lucide-react";
+=======
+import { FaArrowRight } from "react-icons/fa6";
+import StatusDot from "../../ui/StatusDot";
+>>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
 import { useTransactionViewStore } from "@/app/store/useTransactionViewStore";
 import { useTransactions } from "@/lib/hooks/use-transactions";
 import Loading from "@/app/loading";
@@ -48,7 +53,7 @@ export default function LatestTransaction() {
           additionalStyles="cursor-pointer text-sm p-2"
           onClick={() => setShowAllTransactions(true)}
         >
-          View All <MoveRight size={16} />
+          View All <FaArrowRight size={16} />
         </Button>
       </div>
 

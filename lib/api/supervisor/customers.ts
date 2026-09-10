@@ -1,4 +1,4 @@
-import { api, safeApiCall } from "../clients";
+import { api, safeApiCall } from "../http-client";
 import { ApiResponse, ApiResponseWithPagination, Customer } from "@/types";
 
 export type GetCustomerProps = {

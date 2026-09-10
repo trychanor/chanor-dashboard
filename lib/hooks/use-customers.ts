@@ -1,12 +1,20 @@
 "use client";
 
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { getCustomerAction, getCustomersAction } from "../actions/customer";
+import { getJson } from "../api/browser-client";
 import {
   GetCustomerProps,
   GetCustomersProps,
 } from "../api/supervisor/customers";
-import { ApiResult } from "@/types";
+import {
+  ApiResponse,
+  ApiResponseWithPagination,
+  ApiResult,
+} from "@/types";
+import {
+  mapCustomerDetailResponse,
+  mapCustomerListResponse,
+} from "@/lib/models/customer.model";
 
 function getApiDataOrThrow<T>(result: ApiResult<T>) {
   if (result.error) {
@@ -16,16 +24,32 @@ function getApiDataOrThrow<T>(result: ApiResult<T>) {
   return result.data;
 }
 
-export const useCustomers = (params: GetCustomersProps) =>
+export const useCustomers = (params: GetCustomersProps, refreshKey = 0) =>
   useQuery({
-    queryKey: ["customers", params],
-    queryFn: async () => getApiDataOrThrow(await getCustomersAction(params)),
+    queryKey: ["customers", params, refreshKey],
+    queryFn: async () =>
+      mapCustomerListResponse(
+        getApiDataOrThrow(
+          await getJson<ApiResponseWithPagination<unknown>>(
+            "/api/supervisor/customers",
+            params,
+          ),
+        ),
+      ),
     placeholderData: keepPreviousData,
   });
 
 export const useCustomer = (params: GetCustomerProps) =>
   useQuery({
     queryKey: ["customer", params.id, params.limit],
-    queryFn: async () => getApiDataOrThrow(await getCustomerAction(params)),
+    queryFn: async () =>
+      mapCustomerDetailResponse(
+        getApiDataOrThrow(
+          await getJson<ApiResponse<unknown>>(
+            `/api/supervisor/customers/${encodeURIComponent(params.id)}`,
+            { limit: params.limit },
+          ),
+        ),
+      ),
     enabled: !!params.id,
   });

@@ -1,6 +1,12 @@
 "use client";
 
-import { Sun, Moon, Bell, Search, BookOpenText } from "lucide-react";
+import {
+  FaBell,
+  FaBookOpen,
+  FaMagnifyingGlass,
+  FaMoon,
+  FaSun,
+} from "react-icons/fa6";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
@@ -17,11 +23,11 @@ export default function Header() {
           href={"/docs"}
           className="p-2 bg-[#EF5A22] text-white rounded-full"
         >
-          <BookOpenText size={17} />
+          <FaBookOpen size={17} />
         </Link>
       )}
       <div className="relative max-w-[400px] flex-1 mr-3">
-        <Search
+        <FaMagnifyingGlass
           size={18}
           className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500"
         />
@@ -35,15 +41,15 @@ export default function Header() {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-4 bg-white rounded-full p-1">
           <button className="p-1.5 bg-[#EF5A22] text-white rounded-full">
-            <Sun size={17} />
+            <FaSun size={17} />
           </button>
           <button className="p-1.5 rounded-full hover:bg-gray-100">
-            <Moon size={17} />
+            <FaMoon size={17} />
           </button>
         </div>
 
         <button className="relative p-1.5 hover:bg-gray-100 rounded-full">
-          <Bell size={20} />
+          <FaBell size={20} />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#EF5A22] rounded-full"></span>
         </button>
 
