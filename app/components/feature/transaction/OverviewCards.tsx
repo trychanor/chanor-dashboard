@@ -2,23 +2,6 @@
 
 import Card from "@/app/components/ui/Card";
 import {
-<<<<<<< HEAD
-  ArrowRightLeft,
-  ArrowUp,
-  BadgePercent,
-  Banknote,
-  TrendingUp,
-  User,
-  UserPlus,
-} from "lucide-react";
-import {
-  useUsersAnalytics,
-  useTransactionVolume,
-  useProfit,
-  useBalance,
-} from "@/lib/hooks/use-analytics";
-import Loading from "@/app/loading";
-=======
   FaArrowRightArrowLeft,
   FaArrowTrendUp,
   FaArrowUp,
@@ -27,7 +10,13 @@ import Loading from "@/app/loading";
   FaUser,
   FaUserPlus,
 } from "react-icons/fa6";
->>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
+import {
+  useUsersAnalytics,
+  useTransactionVolume,
+  useProfit,
+  useBalance,
+} from "@/lib/hooks/use-analytics";
+import Loading from "@/app/loading";
 
 export default function OverviewCards() {
   const period = 30;
@@ -36,32 +25,6 @@ export default function OverviewCards() {
   const volumeQuery = useTransactionVolume({ period });
   const profitQuery = useProfit({ period });
   const balanceQuery = useBalance({ period });
-
-  // Detailed logs
-  console.log("Users →", {
-    data: usersQuery.data,
-    isLoading: usersQuery.isLoading,
-    isError: usersQuery.isError,
-    error: usersQuery.error,
-  });
-  console.log("Volume →", {
-    data: volumeQuery.data,
-    isLoading: volumeQuery.isLoading,
-    isError: volumeQuery.isError,
-    error: volumeQuery.error,
-  });
-  console.log("Profit →", {
-    data: profitQuery.data,
-    isLoading: profitQuery.isLoading,
-    isError: profitQuery.isError,
-    error: profitQuery.error,
-  });
-  console.log("Balance →", {
-    data: balanceQuery.data,
-    isLoading: balanceQuery.isLoading,
-    isError: balanceQuery.isError,
-    error: balanceQuery.error,
-  });
 
   const isLoading =
     usersQuery.isLoading ||

@@ -8,17 +8,13 @@ import Dropdown from "@/app/components/ui/Dropdown";
 import SearchBar from "@/app/components/ui/SearchBar";
 import Status from "@/app/components/ui/Status";
 import Table from "@/app/components/ui/Table";
-<<<<<<< HEAD
 import Loading from "@/app/loading";
-import { ArrowLeft, ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
-=======
 import {
   FaArrowLeft,
   FaChevronLeft,
   FaChevronRight,
   FaRotateRight,
 } from "react-icons/fa6";
->>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
 
 type TransactionRow = {
   ticketId: string;
@@ -58,7 +54,6 @@ export default function AllTransactions() {
   ];
 
   const rows = transactions.map((txn: any) => {
-    // Correct name mapping from the real API response
     const senderName = txn.accountRef?.customerRef
       ? `${txn.accountRef.customerRef.firstName} ${txn.accountRef.customerRef.lastName}`
       : txn.meta?.rawProviderTransaction?.metadata?.customerName || "—";
@@ -96,17 +91,10 @@ export default function AllTransactions() {
 
   return (
     <div className="space-y-4">
-      {/* Back button */}
       <Button variant="text" onClick={() => setShowAllTransactions(false)}>
-<<<<<<< HEAD
-        <ArrowLeft size={16} className="mr-1" />
-        Go Back
-=======
         <FaArrowLeft /> Go Back
->>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
       </Button>
 
-      {/* Search + Filters */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <SearchBar
           value={search}
@@ -134,15 +122,13 @@ export default function AllTransactions() {
               setPage(1);
             }}
           />
-<<<<<<< HEAD
 
           <Button
             variant="text"
             onClick={() => refetch()}
             disabled={isFetching}
           >
-            <RotateCw
-              size={16}
+            <FaRotateRight
               className={isFetching ? "animate-spin mr-1" : "mr-1"}
             />
             Refresh
@@ -150,36 +136,9 @@ export default function AllTransactions() {
         </div>
       </div>
 
-      {/* Table */}
       {isLoading ? (
         <div className="flex justify-center items-center min-h-[300px]">
           <Loading />
-=======
-          <Button variant="text">
-            <FaRotateRight /> Refresh
-          </Button>
-        </div>
-      </div>
-      <div>
-        <Table columns={columns} rows={rows} />
-        <div className="flex justify-between items-center mt-8">
-          <p className="text-sm leading-[18px] text-[#797979]">
-            Showing 1 to 10 of 10 transactions
-          </p>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" additionalStyles="cursor-not-allowed">
-              <FaChevronLeft />
-              Previous
-            </Button>
-            <h3 className="flex justify-center items-center text-white bg-neutral-black py-2.5 px-5 h-full rounded-[5px]">
-              1
-            </h3>
-            <Button variant="outline">
-              Next
-              <FaChevronRight />
-            </Button>
-          </div>
->>>>>>> 0797e4d39bf13511ee1677f4efd72d6d5796ab76
         </div>
       ) : isError ? (
         <div className="flex flex-col items-center justify-center min-h-[300px] gap-3">
@@ -192,7 +151,6 @@ export default function AllTransactions() {
         <>
           <Table columns={columns} rows={rows} />
 
-          {/* Pagination */}
           <div className="flex justify-between items-center mt-6">
             <p className="text-sm text-[#797979]">
               Showing page {page} of {totalPages} ({totalItems} transactions)
@@ -204,7 +162,7 @@ export default function AllTransactions() {
                 disabled={page <= 1}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
               >
-                <ChevronLeft size={16} />
+                <FaChevronLeft />
                 Previous
               </Button>
 
@@ -218,7 +176,7 @@ export default function AllTransactions() {
                 onClick={() => setPage((p) => p + 1)}
               >
                 Next
-                <ChevronRight size={16} />
+                <FaChevronRight />
               </Button>
             </div>
           </div>
