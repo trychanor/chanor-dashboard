@@ -1,4 +1,5 @@
 "use client";
+
 import StatusDot from "@/app/components/ui/StatusDot";
 import BackButton from "@/app/components/ui/BackButton";
 import Button from "@/app/components/ui/Button";
@@ -41,7 +42,8 @@ export default function UserViewDetails() {
     isLoading,
     isError,
     refetch,
-  } = useCustomer({ id, limit: 1 }); // params used here are for test purposes. Don't hardcode
+  } = useCustomer({ id, limit: 1 });
+
   const customer = customerData?.data;
 
   // TRANSACTION OVERVIEW
@@ -52,6 +54,7 @@ export default function UserViewDetails() {
     { key: "date", label: "Date" },
     { key: "status", label: "Status" },
   ];
+
   const rows =
     customer?.transactionHistory?.map((txn) => ({
       id: txn._id,
@@ -67,11 +70,7 @@ export default function UserViewDetails() {
         status: (
           <Status
             label={txn.status}
-            appearance={
-              txn.status === "successful" || txn.status === "success"
-                ? "subtle"
-                : "subtle"
-            }
+            appearance="subtle"
             showDot={true}
           />
         ),
@@ -85,6 +84,7 @@ export default function UserViewDetails() {
     { key: "transfer", label: "Transfer" },
     { key: "status", label: "Status" },
   ];
+
   const rows1 =
     customer?.voiceActivity?.map((voice) => ({
       id: voice._id,
@@ -164,11 +164,12 @@ export default function UserViewDetails() {
           Refresh
         </Button>
       </section>
+
       <section className="flex flex-col gap-8">
-        <div className="grid grid-cols-[35%_65%] gap-4 items-stretch ">
+        <div className="grid grid-cols-[35%_65%] gap-4 items-stretch">
+          {/* Personal Profile */}
           <div className="bg-white py-6 px-4 rounded-lg">
             <div className="max-w-[1000px] mx-auto mb-4">
-              {" "}
               <h3 className="text-base text-neutral-black font-medium">
                 Personal Profile
               </h3>
@@ -179,6 +180,7 @@ export default function UserViewDetails() {
                   : "N/A"}
               </p>
             </div>
+
             <div className="flex flex-col justify-center items-center mb-[91px]">
               <div className="flex justify-center items-center mb-2 w-14 h-14 bg-[#F5F8FF] text-[20px] -tracking-[0.5px] leading-6 font-semibold text-[#2960EC] rounded-full uppercase">
                 {customer?.firstName?.[0]}
@@ -191,6 +193,7 @@ export default function UserViewDetails() {
                 {customer?.firstName} {customer?.lastName}
               </h3>
             </div>
+
             <ul className="flex flex-col gap-8">
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
@@ -200,6 +203,7 @@ export default function UserViewDetails() {
                   {customer?.gender || "Not specified"}
                 </p>
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Phone Number
@@ -208,6 +212,7 @@ export default function UserViewDetails() {
                   {customer?.phone || "N/A"}
                 </p>
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Address
@@ -216,6 +221,7 @@ export default function UserViewDetails() {
                   {customer?.address || "N/A"}
                 </p>
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Date Of Birth
@@ -224,6 +230,7 @@ export default function UserViewDetails() {
                   {customer?.dob || "N/A"}
                 </p>
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Account Status
@@ -234,6 +241,7 @@ export default function UserViewDetails() {
                   showDot={true}
                 />
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Risk Score
@@ -244,6 +252,7 @@ export default function UserViewDetails() {
                   showDot={false}
                 />
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Registered
@@ -254,6 +263,7 @@ export default function UserViewDetails() {
                     : "N/A"}
                 </p>
               </li>
+
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   KYC Level
@@ -262,19 +272,28 @@ export default function UserViewDetails() {
                   Tier {customer?.kyc?.tier || 0}
                 </p>
               </li>
+
+              {/* ✅ FIXED DEVICE FIELD */}
               <li className="flex justify-between items-center">
                 <h3 className="text-[15px] text-[#575758] leading-[18px] font-medium">
                   Device
                 </h3>
                 <p className="text-[13px] text-neutral-black leading-[18px] font-medium">
-                  {customer?.device || "N/A"}
+                  {customer?.device?.deviceName ||
+                    customer?.device?.deviceId ||
+                    (typeof customer?.device === "string"
+                      ? customer.device
+                      : "N/A")}
                 </p>
               </li>
             </ul>
           </div>
+
+          {/* Right side */}
           <div className="bg-white py-6 px-4 rounded-lg">
             <div className="flex items-center justify-between">
-              <div className="max-w-[307px] h-48 border border-[#EDECEC] box-shadow-[0px_4px_4px_0_#EDECEC/25]  w-full bg-white p-4 rounded-lg flex flex-col gap-8">
+              {/* Available Balance */}
+              <div className="max-w-[307px] h-48 border border-[#EDECEC] box-shadow-[0px_4px_4px_0_#EDECEC/25] w-full bg-white p-4 rounded-lg flex flex-col gap-8">
                 <div className="flex items-center gap-4">
                   <Banknote className="w-4 h-4 text-neutral-400" />
                   <h3 className="text-base font-semibold text-neutral-black -leading-[0.33px]">
@@ -303,7 +322,9 @@ export default function UserViewDetails() {
                   </span>
                 </div>
               </div>
-              <div className="max-w-[307px]  h-48 border border-[#EDECEC] w-full bg-white p-4 rounded-lg flex flex-col box-shadow-[0px_4px_4px_0_#EDECEC/25]">
+
+              {/* Security Overview */}
+              <div className="max-w-[307px] h-48 border border-[#EDECEC] w-full bg-white p-4 rounded-lg flex flex-col box-shadow-[0px_4px_4px_0_#EDECEC/25]">
                 <div className="flex items-center gap-4 mb-3">
                   <ShieldCheck className="w-4 h-4 text-neutral-400" />
                   <h3 className="text-base font-semibold text-neutral-black -leading-[0.33px]">
@@ -346,6 +367,8 @@ export default function UserViewDetails() {
                 </ul>
               </div>
             </div>
+
+            {/* Transaction Overview */}
             <div>
               <div className="flex justify-between items-center mt-8 mb-4">
                 <h3 className="text-base font-semibold text-neutral-black -leading-[0.33px]">
@@ -363,6 +386,8 @@ export default function UserViewDetails() {
                 cellClassName="px-[24px] py-[12px] text-sm -tracking-[0.33px] text-neutral-600 text-left"
               />
             </div>
+
+            {/* Voice Activity */}
             <div>
               <div className="flex justify-between items-center mt-8 mb-4">
                 <h3 className="text-base font-semibold text-neutral-black -leading-[0.33px]">
@@ -382,6 +407,8 @@ export default function UserViewDetails() {
             </div>
           </div>
         </div>
+
+        {/* Recent Activity + Ticket History */}
         <div className="grid grid-cols-2 divide-x gap-4 divide-[#d9d9d9] p-4 bg-white rounded-lg">
           <div className="pr-6">
             <h3 className="text-[20px] font-medium -tracking-[0.33px] text-black mb-6">
@@ -392,7 +419,7 @@ export default function UserViewDetails() {
               <div className="flex flex-col gap-4">
                 {activities.map((activity, index) => (
                   <div key={index} className="relative flex items-start gap-4">
-                    <div className="shrink-0 w-[50px] ">
+                    <div className="shrink-0 w-[50px]">
                       <div className="text-xs text-[#9D9C9C] font-medium leading-5 text-right -tracking-[0.25px]">
                         {activity.time}
                       </div>
@@ -405,7 +432,6 @@ export default function UserViewDetails() {
                       <StatusDot label={`${activity.status}`} />
                     </div>
 
-                    {/* Content Card */}
                     <div className="flex-1 border border-[#C7C7CC]/50 rounded-[5px] p-[11px] flex items-center justify-between">
                       <div>
                         <h4 className="text-[13px] font-medium text-neutral-black -tracking-[0.25px]">
@@ -426,6 +452,7 @@ export default function UserViewDetails() {
               </div>
             </div>
           </div>
+
           <div>
             <h3 className="text-[20px] font-medium -tracking-[0.33px] text-neutral-black">
               Ticket History

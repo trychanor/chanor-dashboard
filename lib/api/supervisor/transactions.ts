@@ -9,6 +9,7 @@ export type GetTransactionsProps = {
   search?: string;
 };
 
+  
 export const getTransactions = async ({
   page,
   limit,
