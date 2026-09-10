@@ -14,6 +14,7 @@ export default function UserView() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [isManualRefresh, setIsManualRefresh] = useState(false);
+
   const {
     data: customersData,
     isLoading,

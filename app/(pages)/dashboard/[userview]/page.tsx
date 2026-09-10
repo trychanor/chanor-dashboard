@@ -35,6 +35,7 @@ type TransactionOverviewRow = {
   date: string;
   status: React.ReactNode;
 };
+
 type VoiceActivityRow = {
   command: string;
   date: string;
@@ -123,17 +124,18 @@ export default function UserViewDetails() {
   const params = useParams();
   const id = params?.userview as string;
   const [isManualRefresh, setIsManualRefresh] = useState(false);
+
   const {
     data: customerData,
     isLoading,
     isError,
     refetch,
   } = useCustomer({ id, limit: 1 });
+
   const customer = customerData?.data;
 
   const refreshCustomerDetails = async () => {
     setIsManualRefresh(true);
-
     try {
       await refetch();
     } finally {
@@ -151,8 +153,9 @@ export default function UserViewDetails() {
     { key: "date", label: "Date" },
     { key: "status", label: "Status" },
   ];
+
   const transactionRows =
-    customer?.transactionHistory.map((transaction) => ({
+    customer?.transactionHistory?.map((transaction) => ({
       id: transaction.id,
       data: {
         tfId: transaction.reference ?? "Not available",
@@ -178,8 +181,9 @@ export default function UserViewDetails() {
     { key: "transfer", label: "Transfer" },
     { key: "status", label: "Status" },
   ];
+
   const voiceRows =
-    customer?.voiceActivity.map((voice) => ({
+    customer?.voiceActivity?.map((voice) => ({
       id: voice.id,
       data: {
         command: voice.command ?? "Not available",
@@ -205,7 +209,7 @@ export default function UserViewDetails() {
     })) ?? [];
 
   const activities =
-    customer?.recentActivities.map((activity) => ({
+    customer?.recentActivities?.map((activity) => ({
       time: formatTime(activity.date),
       date: formatDate(activity.date, {
         locale: "en-GB",
@@ -223,12 +227,13 @@ export default function UserViewDetails() {
       status: formatStatus(activity.status),
     })) ?? [];
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex min-h-[500px] items-center justify-center">
         <Loading />
       </div>
     );
+  }
 
   if (isError || !customer) {
     return (
@@ -302,6 +307,7 @@ export default function UserViewDetails() {
               showDot={true}
             />
           </div>
+
           <div className="flex items-center gap-3 py-5">
             <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-blue-50 text-base font-semibold uppercase text-blue-secondary">
               {customer.firstName?.[0] ?? customer.name[0]}
@@ -316,6 +322,7 @@ export default function UserViewDetails() {
               </p>
             </div>
           </div>
+
           <dl className="grid gap-3 border-t border-neutral-200 pt-4 text-sm">
             {profileItems.map(([label, value]) => (
               <div
@@ -379,6 +386,7 @@ export default function UserViewDetails() {
                 </span>
               </div>
             </section>
+
             <section className="rounded-lg border border-neutral-200 p-4">
               <div className="flex items-center gap-2 text-neutral-500">
                 <FaShieldHalved className="size-4" />
@@ -450,6 +458,7 @@ export default function UserViewDetails() {
               />
             )}
           </section>
+
           <section>
             <div className="mb-3 flex items-center justify-between gap-3">
               <div>
@@ -531,6 +540,7 @@ export default function UserViewDetails() {
             />
           )}
         </div>
+
         <div>
           <div className="mb-5">
             <h3 className="text-base font-semibold text-neutral-black">
@@ -540,7 +550,7 @@ export default function UserViewDetails() {
               Support requests raised by this user
             </p>
           </div>
-          {customer.ticketHistory.length > 0 ? (
+          {customer.ticketHistory?.length > 0 ? (
             <div className="space-y-3">
               {customer.ticketHistory.map((ticket) => (
                 <article

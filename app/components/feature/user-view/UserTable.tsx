@@ -47,6 +47,7 @@ export default function UserTable({
   onPageSizeChange,
 }: UserTableProps) {
   const router = useRouter();
+
   const columns: Array<{ key: keyof UserTableRow; label: string }> = [
     { key: "userId", label: "User ID" },
     { key: "name", label: "Name" },
