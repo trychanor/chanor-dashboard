@@ -1,9 +1,27 @@
+"use client";
+
 import Card from "@/app/components/ui/Card";
+import { useSecurityOverview } from "@/hooks/use-security";
+import { formatNumber } from "@/utils/formatting.util";
 import { FaArrowUp, FaChartLine } from "react-icons/fa6";
 
 export default function SecurityOverviewCards() {
+  const query = useSecurityOverview();
+
+  if (query.isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-busy="true">
+        {Array.from({ length: 4 }, (_, index) => (
+          <div key={index} className="h-[118px] animate-pulse rounded-lg bg-neutral-100" />
+        ))}
+      </div>
+    );
+  }
+
+  const data = query.data;
+
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       {/* Failed Login */}
       <Card
         height="118px"
@@ -15,13 +33,12 @@ export default function SecurityOverviewCards() {
           </div>
         }
         main={
-          <h2 className="text-xl font-semibold text-[#1a1a1a]">58</h2>
+          <h2 className="text-xl font-semibold text-[#1a1a1a]">{formatNumber(data?.failedLoginCount)}</h2>
         }
         footer={
           <div className="flex items-center gap-1">
             <FaArrowUp className="w-4 h-4 text-red-primary" />
-            <span className="text-xs font-medium text-red-primary">+8.5%</span>
-            <span className="text-xs text-[#8E8E93]">Today</span>
+            <span className="text-xs text-[#8E8E93]">Current total</span>
           </div>
         }
       />
@@ -37,13 +54,12 @@ export default function SecurityOverviewCards() {
           </div>
         }
         main={
-          <h2 className="text-xl font-semibold text-[#1a1a1a]">58</h2>
+          <h2 className="text-xl font-semibold text-[#1a1a1a]">{formatNumber(data?.activeSessions)}</h2>
         }
         footer={
           <div className="flex items-center gap-1">
             <FaArrowUp className="w-4 h-4 text-green-primary" />
-            <span className="text-xs font-medium text-green-primary">+8.5%</span>
-            <span className="text-xs text-[#8E8E93]">Today</span>
+            <span className="text-xs text-[#8E8E93]">Current total</span>
           </div>
         }
       />
@@ -59,13 +75,12 @@ export default function SecurityOverviewCards() {
           </div>
         }
         main={
-          <h2 className="text-xl font-semibold text-[#1a1a1a]">0</h2>
+          <h2 className="text-xl font-semibold text-[#1a1a1a]">{formatNumber(data?.lockedAccounts)}</h2>
         }
         footer={
           <div className="flex items-center gap-1">
             <FaArrowUp className="w-4 h-4 text-green-primary" />
-            <span className="text-xs font-medium text-green-primary">+8.5%</span>
-            <span className="text-xs text-[#8E8E93]">Today</span>
+            <span className="text-xs text-[#8E8E93]">Current total</span>
           </div>
         }
       />
@@ -81,13 +96,12 @@ export default function SecurityOverviewCards() {
           </div>
         }
         main={
-          <h2 className="text-xl font-semibold text-[#1a1a1a]">10</h2>
+          <h2 className="text-xl font-semibold text-[#1a1a1a]">{formatNumber(data?.openFraudAlerts)}</h2>
         }
         footer={
           <div className="flex items-center gap-1">
             <FaArrowUp className="w-4 h-4 text-green-primary" />
-            <span className="text-xs font-medium text-green-primary">+8.5%</span>
-            <span className="text-xs text-[#8E8E93]">Today</span>
+            <span className="text-xs text-[#8E8E93]">Current total</span>
           </div>
         }
       />

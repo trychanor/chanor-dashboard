@@ -77,7 +77,7 @@ export const floatGaugeAlertsData = [
     data: {
       alertId: "RA102",
       type: "Mismatch",
-      description: "₦200,000 not reflected on providus",
+      description: "₦200,000 not reflected on Xpress",
       amount: "₦30,000",
       status: renderStatus("Failed", "subtle", true), // Using 'Failed' to trigger red color for Critical
     },

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDashboardRouteAccessError } from "@/lib/api/dashboard-route-access";
-import { MAX_PAGE_SIZE, readPositiveInteger } from "@/lib/api/route-query";
-import { getCustomers } from "@/lib/api/supervisor/customers";
+import { getDashboardRouteAccessError } from "@/lib/routing/dashboard-route-access";
+import { MAX_PAGE_SIZE, readPositiveInteger } from "@/lib/routing/route-query";
+import { getCustomers } from "@/services/api/supervisor/customers";
 
 export const dynamic = "force-dynamic";
 

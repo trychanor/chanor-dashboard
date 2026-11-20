@@ -7,6 +7,7 @@ const RADIAN = Math.PI / 180;
 
 interface PieChartWithCustomizedLabelProps {
   data: { name: string; value: number }[];
+  valueSuffix?: string;
   colors?: string[];
   width?: number;
   height?: number;
@@ -32,6 +33,7 @@ export default function PieCharts({
   width = 370,
   height = 370,
   isAnimationActive = true,
+  valueSuffix = "",
 }: PieChartWithCustomizedLabelProps) {
   // Custom label renderer
   const renderCustomizedLabel = ({
@@ -58,7 +60,7 @@ export default function PieCharts({
     const y = Number(cy) + radius * Math.sin(-(midAngle ?? 0) * RADIAN);
 
     const name = data[index ?? 0].name;
-    const percentage = `${((percent ?? 0) * 100).toFixed(0)}%`;
+    const percentage = `${((percent ?? 0) * 100).toFixed(1)}%`;
     const color = colors[index ?? 0];
 
     return (
@@ -98,7 +100,7 @@ export default function PieCharts({
           align="center"
           formatter={(value) => {
             const item = data.find((d) => d.name === value);
-            return `${item?.value}% ${value}`;
+            return `${item?.value}${valueSuffix} ${value}`;
           }}
         />
       </PieChart>

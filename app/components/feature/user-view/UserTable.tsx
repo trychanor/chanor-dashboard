@@ -6,7 +6,7 @@ import Pagination from "@/app/components/ui/Pagination";
 import Status from "@/app/components/ui/Status";
 import Table from "@/app/components/ui/Table";
 import TableSkeleton from "@/app/components/ui/TableSkeleton";
-import { CustomerSummary } from "@/lib/models/customer.model";
+import { CustomerSummary } from "@/models/customer.model";
 import { ApiResponseWithPagination } from "@/types";
 import { formatDate } from "@/utils/formatting.util";
 import { useRouter } from "next/navigation";

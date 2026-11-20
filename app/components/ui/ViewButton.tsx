@@ -1,5 +1,5 @@
 import { FaEye } from "react-icons/fa6";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 import Button from "./Button";
 
 type ViewButtonProps = Omit<
@@ -7,24 +7,31 @@ type ViewButtonProps = Omit<
   "children"
 > & {
   label?: string;
+  icon?: ReactNode;
+  iconPosition?: "before" | "after";
   additionalStyles?: string;
 };
 
 export default function ViewButton({
-  label = "View",
+  label,
+  icon = <FaEye size={16} />,
+  iconPosition = "before",
   additionalStyles = "",
   title,
   ...props
 }: ViewButtonProps) {
+  const buttonLabel = label ?? title ?? "View";
+
   return (
     <Button
       variant="default"
-      title={title ?? label}
+      title={title ?? buttonLabel}
       additionalStyles={`shrink-0 px-3 py-2 text-sm ${additionalStyles}`}
       {...props}
     >
-      <FaEye size={16} />
-      {label}
+      {iconPosition === "before" && icon}
+      {buttonLabel}
+      {iconPosition === "after" && icon}
     </Button>
   );
 }

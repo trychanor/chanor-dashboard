@@ -10,6 +10,8 @@ export type CustomerSummary = {
   userId: string;
   name: string;
   email: string;
+  balance: number | null;
+  balanceChange: number | null;
   dateRegistered: string | null;
   lastActive: string | null;
   accountStatus: string | null;
@@ -122,6 +124,8 @@ function mapCustomerSummary(value: unknown): CustomerSummary | null {
     userId,
     name: readText(value.name) ?? "Unnamed user",
     email: readText(value.email) ?? "Email not available",
+    balance: readDecimal(value.balance),
+    balanceChange: readDecimal(value.balanceChange),
     dateRegistered: readText(value.dateRegistered),
     lastActive: readText(value.lastActive),
     accountStatus: readText(value.accountStatus),
@@ -267,8 +271,6 @@ export function mapCustomerDetailResponse(
       address: readText(response.data.address),
       riskScore: readText(response.data.riskScore),
       deviceName: readDeviceName(response.data.device),
-      balance: readDecimal(response.data.balance),
-      balanceChange: readDecimal(response.data.balanceChange),
       lastDeposit: mapLastDeposit(response.data.lastDeposit),
       securityOverview: mapSecurityOverview(response.data.securityOverview),
       kycTier: readNumber(response.data.kycTier) ?? readNumber(kyc?.tier),

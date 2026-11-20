@@ -6,17 +6,10 @@ import Table from "@/app/components/ui/Table";
 import LoaderMini from "@/app/components/ui/LoaderMini";
 import { FaRotateRight } from "react-icons/fa6";
 import {
-  floatGaugeUsersData,
   floatGaugeAlertsData,
 } from "../../../mocks/wallet-dummy-data";
 
-type FloatGaugeUserRow = {
-  id: string;
-  businessName: string;
-  email: string;
-  balance: string;
-  category: string;
-};
+// The business-user float table remains unavailable until its API contract exists.
 
 type FloatGaugeAlertRow = {
   alertId: string;
@@ -36,15 +29,6 @@ export default function FloatGauge() {
       setIsRefreshing(false);
     }, 1500);
   };
-
-  // --- Table 1 Columns ---
-  const userColumns: Array<{ key: keyof FloatGaugeUserRow; label: string }> = [
-    { key: "id", label: "ID" },
-    { key: "businessName", label: "Business Name" },
-    { key: "email", label: "Email" },
-    { key: "balance", label: "Balance" },
-    { key: "category", label: "Category" },
-  ];
 
   // --- Table 2 Columns ---
   const alertColumns: Array<{
@@ -68,15 +52,12 @@ export default function FloatGauge() {
         </div>
       ) : (
         <>
-          {/* Business List */}
+          {/*
+            Business-user float data is not yet available from the supervisor API.
           <div>
-            <Table
-              columns={userColumns}
-              rows={floatGaugeUsersData}
-              showRowActions={true}
-              cellClassName="p-3 text-[13px] text-neutral-600 text-left"
-            />
+            <Table columns={userColumns} rows={floatGaugeUsersData} />
           </div>
+          */}
 
           {/* Alerts */}
           <div>

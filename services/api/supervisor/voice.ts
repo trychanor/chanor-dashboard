@@ -4,7 +4,7 @@ import {
   ApiResponseWithMetadata,
   Voice,
 } from "@/types";
-import { safeApiCall, api } from "../http-client";
+import { safeApiCall, api } from "../../../lib/http/http-client";
 
 type GetVoiceProps = {
   period: number;

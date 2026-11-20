@@ -1,4 +1,4 @@
-const unavailableText = "Not available";
+const unavailableText = "unavailable";
 
 type DateFormatOptions = {
   includeTime?: boolean;
@@ -15,11 +15,7 @@ type CurrencyFormatOptions = {
 
 export function formatDate(
   value: string | null | undefined,
-  {
-    includeTime = false,
-    locale,
-    dateOptions,
-  }: DateFormatOptions = {},
+  { includeTime = false, locale, dateOptions }: DateFormatOptions = {},
 ) {
   if (!value) return unavailableText;
 
@@ -72,6 +68,27 @@ export function formatCurrency(
     minimumFractionDigits,
     maximumFractionDigits,
   })}`;
+}
+
+export function formatNumber(
+  value: number | null | undefined,
+  locale = "en-NG",
+) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return unavailableText;
+  }
+
+  return value.toLocaleString(locale);
+}
+
+export function formatPercentage(value: number | null | undefined) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return unavailableText;
+  }
+
+  return `${value > 0 ? "+" : ""}${value.toLocaleString("en-NG", {
+    maximumFractionDigits: 2,
+  })}%`;
 }
 
 export function formatStatus(value: string | null | undefined) {
