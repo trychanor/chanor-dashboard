@@ -3,8 +3,10 @@ import {
   Notification,
   ApiResponse,
   Settlement,
+  SettlementReport,
+  AnalyticsPeriod,
 } from "@/types";
-import { safeApiCall, api } from "../http-client";
+import { safeApiCall, api } from "../../../lib/http/http-client";
 
 export type GetNotificationsProps = {
   page: number;
@@ -25,5 +27,12 @@ export const getNotifications = async ({
 
 export const getSettlements = async () =>
   safeApiCall(() =>
-    api.get("supervisors/settlement").json<ApiResponse<Settlement>>(),
+    api.get("supervisors/settlement").json<ApiResponse<Settlement[]>>(),
+  );
+
+export const getSettlementReport = async (period: AnalyticsPeriod) =>
+  safeApiCall(() =>
+    api
+      .get("supervisors/settlement-report", { searchParams: { period } })
+      .json<ApiResponse<SettlementReport>>(),
   );

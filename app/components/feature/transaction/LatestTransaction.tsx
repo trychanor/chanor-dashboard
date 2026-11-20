@@ -1,112 +1,111 @@
 "use client";
 
 import Button from "@/app/components/ui/Button";
+import EmptyState from "@/app/components/ui/EmptyState";
 import Status from "@/app/components/ui/Status";
 import StatusDot from "@/app/components/ui/StatusDot";
-import { FaArrowRight } from "react-icons/fa6";
+import ViewButton from "@/app/components/ui/ViewButton";
 import { useTransactionViewStore } from "@/app/store/useTransactionViewStore";
-import { useTransactions } from "@/lib/hooks/use-transactions";
-import Loading from "@/app/loading";
+import { useTransactions } from "@/hooks/use-transactions";
+import {
+  formatCurrency,
+  formatDate,
+  formatStatus,
+} from "@/utils/formatting.util";
+import { FaArrowRight } from "react-icons/fa6";
+
+function LatestTransactionsSkeleton() {
+  return (
+    <div className="space-y-3 rounded-lg bg-white p-3" aria-busy="true">
+      <div className="h-8 w-48 animate-pulse rounded bg-neutral-100" />
+      {Array.from({ length: 5 }, (_, index) => (
+        <div
+          key={index}
+          className="h-12 animate-pulse rounded bg-neutral-100"
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function LatestTransaction() {
   const { setShowAllTransactions } = useTransactionViewStore();
-
-  const { data, isLoading, isError } = useTransactions({
+  const { data, isLoading, isError, refetch } = useTransactions({
     page: 1,
     limit: 5,
   });
 
-  const transactions = data?.data || [];
-
-  if (isLoading) {
-    return (
-      <div className="bg-white rounded-lg p-6 flex justify-center items-center min-h-[200px]">
-        <Loading />
-      </div>
-    );
-  }
+  if (isLoading) return <LatestTransactionsSkeleton />;
 
   if (isError) {
     return (
-      <div className="bg-white rounded-lg p-6 text-center text-sm text-neutral-500">
-        Failed to load latest transactions.
+      <div className="flex min-h-[200px] flex-col items-center justify-center gap-3 rounded-lg bg-white p-6 text-center">
+        <p className="text-sm text-neutral-600">
+          Recent transactions are temporarily unavailable.
+        </p>
+        <Button onClick={() => refetch()}>Retry</Button>
       </div>
     );
   }
 
+  const transactions = data?.data ?? [];
+
   return (
-    <div className="bg-white rounded-lg p-3">
-      <div className="flex justify-between items-center mb-2">
+    <div className="rounded-lg bg-white p-3">
+      <div className="mb-2 flex items-center justify-between gap-3">
         <div>
           <h4 className="text-sm font-semibold text-neutral-black">
-            Latest Transaction
+            Latest Transactions
           </h4>
-          <p className="text-xs text-[#7d7d7e]">Recent users transaction</p>
+          <p className="text-xs text-neutral-500">Recent account activity</p>
         </div>
-        <Button
-          variant="text"
-          additionalStyles="cursor-pointer text-sm p-2"
+        <ViewButton
+          title="View all"
+          icon={<FaArrowRight size={16} />}
+          iconPosition="after"
+          additionalStyles="px-3 py-2"
           onClick={() => setShowAllTransactions(true)}
-        >
-          View All <FaArrowRight size={16} />
-        </Button>
+        />
       </div>
 
       {transactions.length === 0 ? (
-        <p className="text-sm text-neutral-500 py-6 text-center">
-          No recent transactions
-        </p>
+        <EmptyState
+          title="No recent transactions"
+          description="Recent account activity will appear here."
+          className="min-h-[180px]"
+        />
       ) : (
-        <ul className="grid divide-y divide-[#D9D9D9]">
-          {transactions.map((txn: any) => {
-            const customerName = txn.accountRef?.customerRef
-              ? `${txn.accountRef.customerRef.firstName} ${txn.accountRef.customerRef.lastName}`
-              : txn.meta?.rawProviderTransaction?.metadata?.customerName ||
-                "Unknown";
-
-            const service = txn.service
-              ? txn.service.replace(/_/g, " ")
-              : "Transaction";
-
-            const amount =
-              typeof txn.amount === "number"
-                ? txn.amount.toLocaleString()
-                : txn.amount?.$numberDecimal
-                  ? Number(txn.amount.$numberDecimal).toLocaleString()
-                  : "0";
-
-            return (
-              <li
-                key={txn._id || txn.id}
-                className="flex justify-between items-center py-2"
-              >
-                <div className="flex items-center gap-4">
-                  <StatusDot label={txn.status || "pending"} />
-                  <div>
-                    <h4 className="text-sm text-neutral-black font-semibold">
-                      {customerName} – {service}
-                    </h4>
-                    <p className="text-xs text-neutral-500">
-                      {txn.createdAt
-                        ? new Date(txn.createdAt).toLocaleDateString()
-                        : "—"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <p className="text-sm text-neutral-black font-semibold">
-                    ₦{amount}
+        <ul className="grid divide-y divide-neutral-200">
+          {transactions.map((transaction) => (
+            <li
+              key={transaction.id}
+              className="flex flex-wrap items-center justify-between gap-3 py-3"
+            >
+              <div className="flex min-w-0 items-center gap-3">
+                <StatusDot label={formatStatus(transaction.status)} />
+                <div className="min-w-0">
+                  <h4 className="truncate text-sm font-semibold text-neutral-black">
+                    {transaction.customerName ?? "Not available"}
+                    {transaction.service ? ` - ${transaction.service}` : ""}
+                  </h4>
+                  <p className="text-xs text-neutral-500">
+                    {formatDate(transaction.createdAt)}
                   </p>
-                  <Status
-                    label={txn.status || "pending"}
-                    appearance="solid"
-                    showDot={false}
-                  />
                 </div>
-              </li>
-            );
-          })}
+              </div>
+
+              <div className="flex items-center gap-3">
+                <p className="text-sm font-semibold text-neutral-black">
+                  {formatCurrency(transaction.amount)}
+                </p>
+                <Status
+                  label={formatStatus(transaction.status)}
+                  appearance="solid"
+                  showDot={false}
+                />
+              </div>
+            </li>
+          ))}
         </ul>
       )}
     </div>

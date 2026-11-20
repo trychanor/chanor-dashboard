@@ -6,12 +6,13 @@ import {
   ProfitBreakdown,
   Profit,
   TransactionVolume,
+  AnalyticsPeriod,
 } from "@/types";
-import { safeApiCall, api } from "../http-client";
+import { safeApiCall, api } from "../../../lib/http/http-client";
 
 export type GetTransactionsAnalyticsProps = {
-  period: number
-}
+  period: AnalyticsPeriod;
+};
 
 export const getBalance = async ({ period }: GetTransactionsAnalyticsProps) =>
   safeApiCall(() =>

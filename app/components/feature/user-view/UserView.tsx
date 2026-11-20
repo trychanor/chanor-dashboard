@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { useCustomers } from "@/lib/hooks/use-customers";
+import { useCustomers } from "@/hooks/use-customers";
 import UserAction from "./UserAction";
 import UserTable from "./UserTable";
 

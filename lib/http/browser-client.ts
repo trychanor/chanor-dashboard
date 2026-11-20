@@ -18,6 +18,7 @@ export async function getJson<T>(
     headers: { Accept: "application/json" },
     cache: "no-store",
   });
+  
   let result: ApiResult<T>;
 
   try {

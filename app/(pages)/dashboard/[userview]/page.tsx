@@ -11,7 +11,7 @@ import Skeleton from "@/app/components/ui/Skeleton";
 import Table from "@/app/components/ui/Table";
 import TableSkeleton from "@/app/components/ui/TableSkeleton";
 import ViewButton from "@/app/components/ui/ViewButton";
-import { useCustomer } from "@/lib/hooks/use-customers";
+import { useCustomer } from "@/hooks/use-customers";
 import {
   formatCurrency,
   formatDate,

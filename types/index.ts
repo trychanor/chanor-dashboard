@@ -7,7 +7,7 @@ export type PaginationMetadata = {
 
 export type ApiResponse<T> = {
   data: T;
-  status: boolean;
+  status: "success" | "fail" | "error";
 };
 
 export type ApiResult<T> =
@@ -25,11 +25,34 @@ export type ApiResponseWithPagination<T> = ApiResponse<T> & {
 export type ApiResponseWithPaginationAndMetadata<T, M> =
   ApiResponseWithMetadata<T, PaginationMetadata & M>;
 
+export type AnalyticsPeriod = "day" | "week" | "month" | "year";
+
 export type Transactions = {
+  id: string;
+  account: {
+    id: string;
+    accountNumber: string;
+    bankName: string;
+    customer: {
+      id: string;
+      name: string;
+    };
+  };
   reference: string;
   type: string;
+  service: string;
+  channel: string;
   amount: number;
+  chanorFee: number;
+  providerFee: number;
+  vat: number;
+  stampDutyAmount: number;
   status: string;
+  providers: {
+    wallet: string;
+    bill: string;
+    reference: string;
+  };
   createdAt: string;
 };
 
@@ -39,6 +62,13 @@ export type Settlement = {
   balanceEstimated: number;
   balanceActual: number;
   lastCheckedAt: string;
+};
+
+export type SettlementReport = {
+  totalFloat: number;
+  pendingAmount: number;
+  inflow: number;
+  outflow: number;
 };
 
 export type Notification = {
@@ -144,45 +174,45 @@ export type Customer = {
 
 export type User = {
   totalUsers: {
-    value: 0;
-    change: 0;
+    value: number;
+    change: number;
   };
   activeUsers: {
-    value: 0;
-    change: 0;
+    value: number;
+    change: number;
   };
 };
 
 export type TransactionVolume = {
   totalInflow: {
-    value: 0;
-    change: 0;
+    value: number;
+    change: number;
   };
-  activeOutflow: {
-    value: 0;
-    change: 0;
+  totalOutflow: {
+    value: number;
+    change: number;
   };
 };
 
 export type Profit = {
   companyProfit: {
-    value: 0;
-    change: 0;
+    value: number;
+    change: number;
   };
   netProfit: {
-    value: 0;
-    change: 0;
+    value: number;
+    change: number;
   };
 };
 
 export type Balance = {
-  totalCommission: {
-    value: 0;
-    change: 0;
+  totalAgentCommissionClaimed: {
+    value: number;
+    change: number;
   };
   totalWalletBalance: {
-    value: 0;
-    change: 0;
+    value: number;
+    change: number;
   };
 };
 

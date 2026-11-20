@@ -1,11 +1,11 @@
 "use client";
 
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { getJson } from "../api/browser-client";
+import { getJson } from "../lib/http/browser-client";
 import {
   GetCustomerProps,
   GetCustomersProps,
-} from "../api/supervisor/customers";
+} from "../services/api/supervisor/customers";
 import {
   ApiResponse,
   ApiResponseWithPagination,
@@ -14,7 +14,7 @@ import {
 import {
   mapCustomerDetailResponse,
   mapCustomerListResponse,
-} from "@/lib/models/customer.model";
+} from "@/models/customer.model";
 
 function getApiDataOrThrow<T>(result: ApiResult<T>) {
   if (result.error) {

@@ -1,20 +1,27 @@
+"use client";
+
+import EmptyState from "@/app/components/ui/EmptyState";
 import LineCharts from "@/app/components/ui/LineChart";
+import { useInflowOutflow } from "@/hooks/use-analytics";
+import { AnalyticsPeriod } from "@/types";
 
 type ProfitOverviewChartProps = {
   additionalStyles?: string;
+  period?: AnalyticsPeriod;
 };
 
 export default function ProfitOverviewChart({
   additionalStyles,
+  period = "month",
 }: ProfitOverviewChartProps) {
-  const data = [
-    { name: "Monday", pv: 2400, amt: 2400 },
-    { name: "Tuesday", pv: 1398, amt: 2210 },
-    { name: "Wednesday", pv: 9800, amt: 2290 },
-    { name: "Thursday", pv: 3908, amt: 2000 },
-    { name: "Friday", pv: 4800, amt: 2181 },
-    { name: "Saturday", pv: 3800, amt: 2500 },
-    { name: "Sunday", pv: 4300, amt: 2100 },
-  ];
-  return <LineCharts data={data} additionalStyles={additionalStyles} />;
+  const query = useInflowOutflow({ period });
+  const trendData = query.data ?? [];
+
+  if (query.isLoading) return <div className="h-72 animate-pulse rounded-lg bg-neutral-100" />;
+
+  if (query.isError || trendData.length === 0) {
+    return <EmptyState title="No transaction trend data" description="Transaction trends will appear here when available." className="min-h-72" />;
+  }
+
+  return <LineCharts data={trendData.map((item) => ({ name: item.date ?? "Unknown date", pv: item.inflow ?? 0, amt: item.outflow ?? 0 }))} additionalStyles={additionalStyles} />;
 }

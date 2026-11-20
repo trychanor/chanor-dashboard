@@ -6,10 +6,13 @@ import WalletOverviewCards from "./WalletOverviewCards";
 import FloatGauge from "./FloatGauge";
 import DailyNet from "./DailyNet";
 import UsersWallet from "./UsersWallet";
-import BusinessWallet from "./BusinessWallet";
+// BusinessWallet remains unsupported until the supervisor API provides business-wallet data.
+import PeriodFilter from "@/app/components/ui/PeriodFilter";
+import { AnalyticsPeriod } from "@/types";
 
 export default function WalletAndBalance() {
   const [activeTab, setActiveTab] = useState("Float Gauge");
+  const [period, setPeriod] = useState<AnalyticsPeriod>("week");
 
   const tabs = [
     { 
@@ -27,17 +30,19 @@ export default function WalletAndBalance() {
       label: "Users Wallet", 
       content: <UsersWallet /> 
     },
-    { 
-      key: "Business Wallet", 
-      label: "Business Wallet", 
-      content: <BusinessWallet /> 
-    },
+    // {
+    //   key: "Business Wallet",
+    //   label: "Business Wallet",
+    //   content: <BusinessWallet />,
+    // },
   ];
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Top Cards Section */}
-      <WalletOverviewCards />
+      <div className="flex justify-end">
+        <PeriodFilter value={period} onChange={setPeriod} />
+      </div>
+      <WalletOverviewCards period={period} />
 
       {/* Tabs Section */}
       <div>

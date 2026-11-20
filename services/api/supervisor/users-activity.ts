@@ -1,8 +1,13 @@
-import { ApiResponseWithMetadata, ActivitySource, User } from "@/types";
-import { safeApiCall, api } from "../http-client";
+import {
+  ActivitySource,
+  AnalyticsPeriod,
+  ApiResponseWithMetadata,
+  User,
+} from "@/types";
+import { safeApiCall, api } from "../../../lib/http/http-client";
 
 export type GetUsersActivityProps = {
-  period: number;
+  period: AnalyticsPeriod;
 };
 
 export const getActivitySource = async ({ period }: GetUsersActivityProps) =>

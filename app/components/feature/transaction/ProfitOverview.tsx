@@ -5,12 +5,15 @@ import { useState } from "react";
 import SourceChartOverview from "./SourceChartOverview";
 import ProfitOverviewChart from "./ProfitOverviewChart";
 import ProfitBreakdown from "./ProfitBreakdown";
+import { AnalyticsPeriod } from "@/types";
 
-export default function ProfitOverview() {
+type ProfitOverviewProps = { period: AnalyticsPeriod };
+
+export default function ProfitOverview({ period }: ProfitOverviewProps) {
   const [activeTab, setActiveTab] = useState("Overview");
   const tabs = [
-    { key: "Overview", label: "Overview", content: <ProfitOverviewChart /> },
-    { key: "Source", label: "Source", content: <SourceChartOverview /> },
+    { key: "Overview", label: "Overview", content: <ProfitOverviewChart period={period} /> },
+    { key: "Source", label: "Source", content: <SourceChartOverview period={period} /> },
     { key: "Breakdown", label: "Breakdown", content: <ProfitBreakdown /> },
   ];
   return (
